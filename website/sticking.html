@@ -1,0 +1,321 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Sticking Exercises</title>
+    <!-- Bootstrap -->
+    <style type="text/css">
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -70px;
+        
+      }
+
+      /* Set the fixed height of the footer here */      
+      #footer {
+		 height: 60px;      
+		 position:fixed;
+		 bottom:0px;
+		 width:100%;
+		 padding=0px;
+		 marging=0px;
+	 
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
+	.footercontent{ 
+		margin: 4px; padding: 4px;
+		border-radius: 10px;
+		margin-left:20px;
+	}
+
+
+	.menucontent{ 
+		margin: 10px; padding: 10px;
+		border-radius: 10px;
+		float:left;
+		height:110px;
+		font:20px/100% Arial, Helvetica, sans-serif;
+		background: #B0B0B0;
+	}
+
+
+</style>
+       <!-- 
+        <link href="css/bootswatcher.css" rel="stylesheet">
+       <link href="css/bootstrap.css" rel="stylesheet">
+       <link href="css/bootstrap-responsive.css" rel="stylesheet">
+       -->
+       
+      <link href="css/bootstrap.css" rel="stylesheet">
+       <link href="css/bootstrap-responsive.css" rel="stylesheet">
+       <link href="css/jquery.slider.min.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+  
+    
+    <div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+     
+    <!-- Be sure to leave the brand out there if you want it shown -->
+    <a class="brand" href="#">RANDOM GROOVES</a>
+     
+    <!-- Everything you want hidden at 940px or less, place within here -->
+    <div class="nav-collapse collapse">
+    <ul class="nav">
+       <li><a href="index.html">Home</a></li>
+    </ul>
+    
+    <ul class="nav">
+    <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    Exercises
+    <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+       
+     <li><a tabindex="-1" href='reading.html'><span>Reading</span></a></li>
+     <li><a tabindex="-1" href='patterns.html'><span>Patterns</span></a></li>
+     <li><a tabindex="-1" href='sticking.html'><span>Sticking</span></a></li>
+     <li><a tabindex="-1" href='scales.html'><span>Scale</span></a></li>
+    
+    </ul>
+    </li>
+    </ul>
+    
+    <ul class="nav">
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="about.html">About</a></li>
+    </ul>
+    
+    </div>     
+    </div>
+    </div>
+    </div>
+    
+      <div id="wrap">
+
+      <!-- Begin page content -->
+      <div class="container">        
+        <div id="maincontent">
+
+<div id="musicsheet"><div id="midicontainer" style='display:hide'></div></div>
+<div id="wavfile"></div>
+<div id="notation">
+<div id='maintext'>
+
+<div class='row'>
+<div class='span9'>
+        
+        <div class="page-header">
+          <h1>Sticking and Coordination exercise</h1>
+        </div>
+
+<p>
+The sticking exercises aim at improving the hand techniques. 
+</p>
+<p>
+The coordination exercises can help you to improve coordination and create 
+nice poliphony.
+</p>
+
+<br>
+<br>
+<br>
+<br>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+        
+
+      </div>
+
+
+    </div>
+
+   
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+    <h3 id="myModalLabel">Generate Rhythms!!</h3>
+    </div>
+    <div class="modal-body">
+
+    <ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#home" id='sticking'>Sticking</a></li>
+    <li><a href="#profile" id='coordination'>Coordination</a></li>
+    <li><a href="#settings">Settings</a></li>
+    <li><a href="#metronome">Metronome</a></li>
+    </ul>
+     
+    <div class="tab-content">
+    <div class="tab-pane active" id="home">
+				
+		<div class="menucontent">
+	  <form name="accent_type_form">
+	  <input type="checkbox"  class='sticking' value="1" checked /> 8th <br>
+	  <input type="checkbox"  class='sticking' value="2" /> triplets<br>
+	  <input type="checkbox"  class='sticking' value="3" /> 16th<br>
+	  </form>
+	  </div>
+	  <br>
+      
+   
+    </div>
+ 
+ 
+    
+    <div class="tab-pane" id="profile">
+ 
+	 <div class="menucontent">
+	Right Hand<br>
+		  <form name="md_type_form">
+		  <input type="radio"  name="md" class="md_form" value="0" /> 4th
+		  <input type="radio"  name="md" class="md_form" value="1" checked /> 8th
+		  <input type="radio"  name="md" class="md_form" value="2" /> triplets <br>
+		  <input type="radio"  name="md" class="md_form" value="3" /> 16th
+		  <input type="radio"  name="md" class="md_form" value="4" /> 5th 
+		  <input type="radio"  name="md" class="md_form" value="5" /> 6th <br>
+		  <input type="radio"  name="md" class="md_form" value="6" /> 7th
+		  <input type="radio"  name="md" class="md_form" value="7" /> 3:4
+		  <input type="radio"  name="md" class="md_form" value="8" /> 5:4	  	  
+		  </form>
+	</div>
+
+
+	<div class="menucontent">
+	Left Hand
+		  <form name="mi_type_form">
+		  <input type="radio"  name="mi" class="mi_form" value="0" /> 4th
+		  <input type="radio"  name="mi" class="mi_form" value="1" checked /> 8th
+		  <input type="radio"  name="mi" class="mi_form" value="2" /> triplets <br>
+		  <input type="radio"  name="mi" class="mi_form" value="3" /> 16th
+		  <input type="radio"  name="mi" class="mi_form" value="4" /> 5th 
+		  <input type="radio"  name="mi" class="mi_form" value="5" /> 6th<br>
+		  <input type="radio"  name="mi" class="mi_form" value="6" /> 7th	  
+		  </form>
+	</div>
+	</div>
+    
+    <div class="tab-pane" id="settings">    
+		<br>
+		Set page width     <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="pg_wdth" type="slider" name="price" value="900" /></span><br><br>
+		Set bar numbers <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="bar_nbr" type="slider" name="price" value="10" /></span><br><br>
+		Set midi tempo <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="mdi_tmpo" type="slider" name="price" value="100" /></span><br>
+    </div>
+    
+    <div class="tab-pane" id="metronome">
+		<br>
+		Set BPM     <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="mtro_bpm" type="slider" name="bpm" value="100" /></span>
+		<button class="btn btn-success btn-large" id="metro_btn" onClick = "toggle_metronome();">Start</button>
+	</div>
+       
+    </div>
+     
+    </div>
+    <div class="modal-footer">
+    
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary"  onClick = "generate_sticking();">Generate</button>
+    </div>
+    </div>
+
+
+    <div id="footer">
+	  <div class='containter'>
+      <div class="footercontent" >
+	   <a href="#myModal" role="button" class="btn btn-large btn-primary" data-toggle="modal" onClick="$('#myTab a:first').tab('show');">START HERE</a>    
+	   <a href="#myModal" class="btn btn-info btn-large" data-toggle="modal" onClick="$('#myTab a:last').tab('show');"><img  src="img/metronome.png" alt="" width='10' height='10'> Metronome</a>	   	   
+	   <a href="#" class="btn btn-info btn-large" onClick='print_midi("midicontainer");'><i class="icon-white icon-download-alt"></i> Save Files</a>
+	   <a href="#" class="btn btn-info btn-large" onClick='printDiv("notation");'><i  class="icon-white icon-print"></i> Print</a>
+   
+	  
+	     <div class="btn-group dropup">
+		<button id='play_pop' class="btn btn-info btn-large"><i id='player_icon' class="icon-white icon-play"></i> Play</button>
+		<button class="btn btn-info btn-large dropdown-toggle" data-toggle="dropdown">
+		<i class="icon-white icon-chevron-up"></i>BPM
+		</button>
+		<ul class="dropdown-menu">
+		<!-- SLIDER FOR BPM -->
+		<br>
+		<span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="listen_bpm" type="slider" name="bpm" value="100" /></span>
+		<br>
+		</ul>
+		</div>
+	   
+	   
+      </div>
+      </div>
+    </div>
+
+    
+    <audio src="losticks.wav"  id="tickwav" />  
+    
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.js"></script>
+    <script src="js/abcjs_basic.min.js" type="text/javascript"></script>	
+	<script src="js/audio.min.js" type="text/javascript"></script>
+    <script src="js/rdm_rhythm.min.js" type="text/javascript"></script>
+	<script src="js/jq_plugins.min.js"></script>
+
+    <script>
+	// global variable to trigger the generation function
+	var generate_str='sticking';
+	
+	$('#myTab a').click(function (e) {
+		e.preventDefault();
+		$(this).tab('show');
+		generate_str=$(this).attr('id');
+    });
+        
+    $(function() {
+	/*Render ABC bits in the text*/
+	$.each($('.abc'),  
+		function(){ 
+			var texto=$(this).text();
+			$(this).text('');
+			$(this).append('<div id="tmp"></div>'); 		
+			ABCJS.renderAbc('tmp', texto, {},  {}, {});
+			$('#tmp').attr('id',''); 	
+		});
+	});
+
+	/* This function is called when the user click on the generate button. It keeps track of 
+	the last tab viewed */
+	function generate_sticking(){
+		
+		if(generate_str==='sticking')
+			render_accent_exercise();
+		else
+			render_coordination_exercise();
+		
+	}
+
+
+    </script>
+    
+    
+    </body>
+    </html>
