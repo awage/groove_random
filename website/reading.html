@@ -3,120 +3,52 @@
     <head>
     <title>Reading Exercises</title>
     <!-- Bootstrap -->
-    <style type="text/css">
-
-      /* Wrapper for page content to push down footer */
-      #wrap {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        /* Negative indent footer by it's height */
-        margin: 0 auto -70px;
-        
-      }
-
-      /* Set the fixed height of the footer here */
-      
-      #footer {
-		 height: 60px;      
-		 position:fixed;
-		 bottom:0px;
-		 width:100%;
-		 padding=10px;
-		 marging=10px;
-	 
-      }
-      #footer {
-        background-color: #f5f5f5;
-      }
-
-      /* Lastly, apply responsive CSS fixes as necessary */
-      @media (max-width: 767px) {
-        #footer {
-          margin-left: -20px;
-          margin-right: -20px;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-      }
-
-
-	.menucontent{ 
-		margin: 10px; padding: 10px;
-		border-radius: 10px;
-		float:left;
-		height:110px;
-		font:20px/100% Arial, Helvetica, sans-serif;
-		background: #B0B0B0;
-	}
-
-
-	.menucontainer{ 
-		width:100%;
-		margin-left:0px;
-		background:#d5d5d5;
-	}
-
-	.footercontent{ 
-		margin: 4px; padding: 4px;
-		border-radius: 10px;
-		margin-left:20px;
-	}
-
-</style>
+  
        <!-- 
         <link href="css/bootswatcher.css" rel="stylesheet">
        <link href="css/bootstrap.css" rel="stylesheet">
        <link href="css/bootstrap-responsive.css" rel="stylesheet">
        -->
-       
+       <link href="css/styles.css" rel="stylesheet">
       <link href="css/bootstrap.css" rel="stylesheet">
        <link href="css/bootstrap-responsive.css" rel="stylesheet">
-       <link href="css/jquery.slider.min.css" rel="stylesheet" type="text/css"/>
+       <link href="css/jquery.slider.min.css" rel="stylesheet" type="text/css">
     </head>
     <body>
   
     
     <div class="navbar">
     <div class="navbar-inner">
-    <div class="container">
-     
+  
     <!-- Be sure to leave the brand out there if you want it shown -->
     <a class="brand" href="#">RANDOM GROOVES</a>
      
     <!-- Everything you want hidden at 940px or less, place within here -->
-    <div class="nav-collapse collapse">
     <ul class="nav">
        <li><a href="index.html">Home</a></li>
-    </ul>
-    
-    <ul class="nav">
-    <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    Exercises
-    <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-       
-     <li><a tabindex="-1" href='reading.html'><span>Reading</span></a></li>
-     <li><a tabindex="-1" href='patterns.html'><span>Patterns</span></a></li>
-     <li><a tabindex="-1" href='sticking.html'><span>Sticking</span></a></li>
-     <li><a tabindex="-1" href='scales.html'><span>Scale</span></a></li>
-    
-    </ul>
-    </li>
-    </ul>
-    
-    <ul class="nav">
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="about.html">About</a></li>
-    </ul>
-    
-    </div>     
+		<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		Exercises
+		<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+		 <li><a tabindex="-1" href='reading.html'><span>Reading</span></a></li>
+		 <li><a tabindex="-1" href='patterns.html'><span>Patterns</span></a></li>
+		 <li><a tabindex="-1" href='sticking.html'><span>Sticking</span></a></li>
+		 <li><a tabindex="-1" href='scales.html'><span>Scale</span></a></li>	
+		</ul>
+		</li>		
+		<li><a href="contact.html">Contact</a></li>
+		<li><a href="about.html">About</a></li>
+		</ul>   		
+	</div>
+	 <ul class="breadcrumb pull-right">
+    <li><a href="home.html">Home</a> <span class="divider">/</span></li>
+    <li class="active">Reading</li>
+    </ul>	
     </div>
     </div>
-    </div>
-    
+        
       <div id="wrap">
 
       <!-- Begin page content -->
@@ -206,49 +138,47 @@ of <a href='about.html'>Gary Chaffee</a>.
     <div class="tab-content">
     <div class="tab-pane active" id="home">
 					
-			<div class="menucontent">	
-			Subdivisions<br> over one beat
-			<table id="tbl" border="0">
-			<thead>
-			<tr>
-			<td><input type="checkbox" class="onebeat" value="1" checked /></td>
-			<td>4th</td>
-			<td><input type="checkbox" class="onebeat" value="2" /></td>
-			<td>8th</td>
-			<td><input type="checkbox" class="onebeat" value="3" /></td>
-			<td>16th</td>
-			</tr>
-
-			<tr>
-			<td><input type="checkbox" class="onebeat" value="4" /></td>
-			<td>triplets</td>
-			<td><input type="checkbox" class="onebeat" value="5" /></td>
-			<td>5th</td>
-			<td><input type="checkbox" class="onebeat" value="6" /></td>
-			<td>6th</td>
-			</tr>
-
-			<tr>
-			<td><input type="checkbox" class="onebeat" value="7" /></td>
-			<td>7th</td>
-			</tr>
-
-			</thead>
-			</table>
-			</div>
+			
 			<div class="menucontent">
-			Subdivisions<br> over two beats<br>
-			<input type="checkbox" class="onebeat" value="8" />3:2<br>
-			<input type="checkbox" class="onebeat" value="9" />5:4<br>
-			<input type="checkbox" class="onebeat" value="10" />7:4<br>
+				<div class="control-group">
+				Subdivisions over one beat<br>
+				
+				<div class="controls span1">
+				<label class="checkbox"><input type="checkbox" class="onebeat" value="1" checked  />4th </label>
+				<label class="checkbox"><input type="checkbox" class="onebeat" value="2" />8th </label>
+				<label class="checkbox"><input type="checkbox" class="onebeat" value="3"  />16th </label>
+				</div>
 
+
+				<div class="controls span1">
+				<label class="checkbox"><input type="checkbox" class="onebeat" value="4" />triplets </label>
+				<label class="checkbox"><input type="checkbox" class="onebeat" value="5" />5th </label>
+				<label class="checkbox"><input type="checkbox" class="onebeat" value="6" />6th </label>
+				<label class="checkbox"><input type="checkbox" class="onebeat" value="7" />7th </label>
+				</div>
+
+				</div>	
 			</div>
+
+
+
+			<div class="menucontent">
+				Subdivisions<br> over two beats<br>
+				<div class="controls span1">
+					<label class="checkbox"><input type="checkbox" class="onebeat" value="8" checked  />3:2</label>
+					<label class="checkbox"><input type="checkbox" class="onebeat" value="9" />5:4</label>
+					<label class="checkbox"><input type="checkbox" class="onebeat" value="10"  />7:4 </label>
+				</div>
+			</div>
+			
 			<div class="menucontent">
 			Difficulty<br>
-				  <form name="difficulty_reading">
-					<input type="radio" name="dif" class='tdif' value="1" checked> Easy<br>
-					<input type="radio" name="dif" class='tdif' value="2"> Hard 	<br>
-					<input type="checkbox" name="dif" class='tdif' value="3"> Dynamics <br>
+				    <form>
+					<div class="control-group">
+					<label class="radio"><input type="radio" name="dif" class='tdif' value="1" checked> Easy</label>
+					<label class="radio"><input type="radio" name="dif" class='tdif' value="2"> Hard</label>
+					<label class="checkbox"><input type="checkbox" class='tdif' value="3"> Dynamics</label>
+					</div>
 					</form>
 				  
 				
@@ -256,12 +186,16 @@ of <a href='about.html'>Gary Chaffee</a>.
 			<div class="menucontent">
 
 			Meters<br>
-				  <form name="meters">
-					<input type="radio" name="mter" class="meter" value="2/4" > 2/4
-					<input type="radio" name="mter" class="meter" value="3/4" > 3/4<br>
-					<input type="radio" name="mter" class="meter" value="4/4" checked> 4/4
-					<input type="radio" name="mter" class="meter" value="5/4" > 5/4<br>
-					<input type="radio" name="mter" class="meter" value="7/4" > 7/4 
+				  <form>
+					<div class="control-group span1">
+					<label class="radio"><input type="radio" name="mter" class="meter" value="2/4" > 2/4</label>
+					<label class="radio"><input type="radio" name="mter" class="meter" value="3/4" > 3/4</label>
+					<label class="radio"><input type="radio" name="mter" class="meter" value="4/4" checked> 4/4</label>
+					</div>
+					<div class="control-group span1">
+					<label class="radio"><input type="radio" name="mter" class="meter" value="5/4" > 5/4</label>
+					<label class="radio"><input type="radio" name="mter" class="meter" value="7/4" > 7/4 </label>
+					</div>
 				  </form>
 				
 			</div>	              
@@ -270,54 +204,45 @@ of <a href='about.html'>Gary Chaffee</a>.
     </div>
     <div class="tab-pane" id="profile">
     
-	<div class="menucontent">
+<div class="menucontent">
 Subdivisions
-<table id="tbl" border="0">
-<thead>
-<tr>
-<td><input type="checkbox" class="cmp_onebeat" value="1" checked /></td>
-<td>dot 4th</td>
-<td><input type="checkbox" class="cmp_onebeat" value="2" /></td>
-<td>8th</td>
+<div class="control-group">		
+<div class="controls span1">
+<label class="checkbox"><input type="checkbox" class="cmp_onebeat" value="1" checked />dot 4th</label>
+<label class="checkbox"><input type="checkbox" class="cmp_onebeat" value="2" />8th</label>
+<label class="checkbox"><input type="checkbox" class="cmp_onebeat" value="3" />16th</label>
+</div>
+<div class="controls span1">
+<label class="checkbox"><input type="checkbox" class="cmp_onebeat" value="4" />4:6</label>
+<label class="checkbox"><input type="checkbox" class="cmp_onebeat" value="5" />5:6</label>
+<label class="checkbox"><input type="checkbox" class="cmp_onebeat" value="6" />7:6</label>
+<label class="checkbox"><input type="checkbox" class="cmp_onebeat" value="7" />8:6</label>
+</div>
 
-</tr>
-<tr>
-<td><input type="checkbox" class="cmp_onebeat" value="3" /></td>
-<td>16th</td>
-<td><input type="checkbox" class="cmp_onebeat" value="4" /></td>
-<td>4:6</td>
-</tr>
-<tr>
-<td><input type="checkbox" class="cmp_onebeat" value="5" /></td>
-<td>5:6</td>
-<td><input type="checkbox" class="cmp_onebeat" value="6" /></td>
-<td>7:6</td>
-</tr>
-<tr>
-<td><input type="checkbox" class="cmp_onebeat" value="7" /></td>
-<td>8:6</td>
-</tr>
-</thead>
-</table>
-
+</div>
 </div>
 
 	<div class="menucontent">
 	Difficulty
-	<form name="difficulty_reading">
-		<input type="radio" name="dif" class="cdif" value="1" checked> Easy<br>
-		<input type="radio" name="dif" class="cdif" value="2"> Hard 	<br>
-		<input type="checkbox" name="dif" class="cdif" value="3"> Dynamics <br>
-	</form>	  	
+	<form>
+		<div class="control-group">
+		<label class="radio"><input type="radio" name="dif" class='cdif' value="1" checked> Easy</label>
+		<label class="radio"><input type="radio" name="dif" class='cdif' value="2"> Hard</label>
+		<label class="checkbox"><input type="checkbox" class='cdif' value="3"> Dynamics</label>
+		</div>
+	</form>
+	
 	</div>
 	
 	<div class="menucontent">
 	Meters
-	<form name="meters">
-		<input type="radio" name="mter" class="cmeter" value="6/8" checked> 6/8 
-		<input type="radio" name="mter" class="cmeter" value="7/8" > 7/8 
-		<input type="radio" name="mter" class="cmeter" value="9/8"> 9/8 <br>
-		<input type="radio" name="mter" class="cmeter" value="12/8" > 12/8 
+	<form>
+		<div class="control-group">
+		<label class="radio"><input type="radio" name="mter" class="cmeter" value="6/8" checked> 6/8 </label>
+		<label class="radio"><input type="radio" name="mter" class="cmeter" value="7/8" > 7/8 </label>
+		<label class="radio"><input type="radio" name="mter" class="cmeter" value="9/8"> 9/8 </label>
+		<label class="radio"><input type="radio" name="mter" class="cmeter" value="12/8" > 12/8</label> 
+		</div>
 	</form>
 	
 	</div>
@@ -328,23 +253,24 @@ Subdivisions
     
     <div class="tab-pane" id="settings">
     
-	<br>
+	
+	<div class="well well-small">
 	Set page width     <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="pg_wdth" type="slider" name="price" value="900" /></span><br><br>
     Set bar numbers <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="bar_nbr" type="slider" name="price" value="10" /></span><br><br>
     Set midi tempo <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="mdi_tmpo" type="slider" name="price" value="100" /></span><br>
-	
+	</div>
 	
 
     </div>
     
     <div class="tab-pane" id="metronome">
     
-	<br>
+	<div class="well well-small">
 	Set BPM     <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="mtro_bpm" type="slider" name="bpm" value="100" /></span>
 
 	<button class="btn btn-success btn-large" id="metro_btn" onClick = "toggle_metronome();">Start</button>
 	</div>
-    
+    </div>
     
     </div>
      
@@ -358,11 +284,10 @@ Subdivisions
 
 
 	
-    <div id="footer">
-	  <div class='containter'>
-      <div class="footercontent" >
-	<a href="#myModal" role="button" class="btn btn-large btn-primary" data-toggle="modal" onClick="$('#myTab a:first').tab('show');">START HERE</a>    
-	   <a href="#myModal" class="btn btn-info btn-large" data-toggle="modal" onClick="$('#myTab a:last').tab('show');"><img  src="img/metronome.png" alt="" width='10' height='10'> Metronome</a>	   	   
+<div class="navbar navbar-fixed-bottom">
+	<div class="footercontent" >
+	   <a href="#myModal" role="button" class="btn btn-large btn-primary" data-toggle="modal" onClick="$('#myTab a:first').tab('show');">START HERE</a>    
+	   <a href="#myModal" class="btn btn-info btn-large" data-toggle="modal" onClick="$('#myTab a:last').tab('show');"><img  src="img/metronome.svg" alt="" width='10' height='10'> Metronome</a>	   	   
 	   <a href="#" class="btn btn-info btn-large" onClick='print_midi("midicontainer");'><i class="icon-white icon-download-alt"></i> Save Files</a>
 	   <a href="#" class="btn btn-info btn-large" onClick='printDiv("notation");'><i  class="icon-white icon-print"></i> Print</a>
    
@@ -383,8 +308,7 @@ Subdivisions
 	   
 	   
       </div>
-      </div>
-    </div>
+</div>
 
 
 

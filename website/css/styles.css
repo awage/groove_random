@@ -45,7 +45,8 @@
 
 
 	.footercontent{ 
-		margin: 4px; padding: 4px;
-		border-radius: 10px;
-		margin-left:20px;
+		margin: 0px; padding: 6px;
+		border-radius: 4px;
+		
+		background: #F1F1F1;
 	}

@@ -14,8 +14,8 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-var renderParams = {width:800}; 
-var printerParams = {scale:1, staffwidth:800};
+var renderParams = {width:900}; 
+var printerParams = {scale:1, staffwidth:900};
 var midiParams={qpm:100};
 var play=0;
 var midi_tempo=100;
