@@ -1,5 +1,5 @@
 //    ui_functions.js: Functions needed for the user interface to plot the music sheet
-//    Copyright (C) 2012 Alexandre Wagemakers (alexandre dot wagemakers at gmail dot com)
+//    Copyright (C) 2013 Alexandre Wagemakers (alexandre dot wagemakers at gmail dot com)
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -41,8 +41,6 @@ $(function() {
 	$("#listen_bpm").slider({ from: 10, to: 300, step: 1, round: 1, format: { format: '##', locale: 'de' }, dimension: 'bpm', skin: "round", callback: function(value){ if(play==1){StopSound('tune_wav'); play=0; play_midi(); } }});
 	
 	
-	
-
 	/* Toggle player */
 	$('#play_pop').click(function(e) {     
 		if(midiParams.miditrack){

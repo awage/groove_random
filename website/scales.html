@@ -8,6 +8,14 @@
        <link href="css/bootstrap.css" rel="stylesheet">
        <link href="css/bootstrap-responsive.css" rel="stylesheet">
        -->
+    <style>
+    .modal modal-body{
+		max-height:600px;
+	}
+    
+    
+    </style>
+    
       <link href="css/styles.css" rel="stylesheet">
       <link href="css/bootstrap.css" rel="stylesheet">
        <link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -132,7 +140,24 @@ They can be played with different foot ostinatos.
 	  </div>		
 	  </form>
 	</div>
-	<br>
+	
+	<div class="menucontent">
+	Foot Pattern<br><br>
+	  <form>
+	  <select id='ftp_selec' class='span1'>
+		<option>None</option>
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		<option>5</option>
+	  </select>
+	  </form>	  
+	</div>
+
+	<div id='ftp_render'></div>
+
+
 
     </div>
 
@@ -235,8 +260,36 @@ They can be played with different foot ostinatos.
 		});
 	});
 
+	$('#ftp_selec').click(function (e) {
+		e.preventDefault();
+		
+		str=$(this).val();		
+		if(str==='None'){			
+			$('#ftp_render').html('');					
+		}
+		if(str==='1'){
+			str='X: 1\nL:1/16\nK:clef=perc\n%%stretchlast 0\n%%pagewidth  100\n|:F4 D4 F4 D4:|\n';
+			ABCJS.renderAbc('ftp_render', str, {}, {scale:1, staffwidth:300},  {width:300});
+		}
+		if(str==='2'){
+			str='X: 1\nL:1/16\nK:clef=perc\n%%stretchlast 0\n%%pagewidth  100\n|:F4 D2F2 F4 D2F2:|\n';
+			ABCJS.renderAbc('ftp_render', str, {}, {scale:1, staffwidth:300},  {width:300});
+		}
+				
+    });
 	
 	
+	function render_bits_abc() {
+	/*Render ABC bits in the text*/
+	$.each($('.abc'),  
+		function(){ 
+			var texto=$(this).text();
+			$(this).text('');
+			$(this).append('<div id="tmp"></div>'); 
+			ABCJS.renderAbc('tmp', texto, {}, {scale:0.5, staffwidth:300},  {width:300});
+			$('#tmp').attr('id',''); 	
+		});
+	}
 
 
     </script>

@@ -1,5 +1,5 @@
 //    render_staff.js: Staff rendering functions 
-//    Copyright (C) 2012 Alexandre Wagemakers (alexandre dot wagemakers at gmail dot com)
+//    Copyright (C) 2013 Alexandre Wagemakers (alexandre dot wagemakers at gmail dot com)
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -111,15 +111,18 @@ function render_coordination_exercise(){
 function render_scales_exercise(){
 
 	set_options();
-	
-	var preamble="X:1\nT: Accent Exercise\nC:Alexandre Wagemakers\nM:4/4\nL: 1/32\n%%stretchlast 0\nK: clef=perc stafflines=1\n";
-	var midipreamble= "X:1\nM: 4/4\nL:1/32\nK:clef=perc\n[V:v1] |"; 
+		
+	var preamble='X:1\nT: Scale Exercise\nC:Alexandre Wagemakers\nM:4/4\nL: 1/32\n%%score (v1 v2)\nV:v1 clef=perc name="Hands" snm="h"\nV:v2 clef="perc"  name="feet"  snm="f"\n%%stretchlast 0\nK: clef=perc\n';
+	var midipreamble= "X:1\nM: 4/4\nL:1/32\nK:clef=perc\n"; 
 	var scale_type=$('input:radio:checked.sc1').map(function () {return this.value;}).get(); 		
 	var stroke_type=$('input:radio:checked.st1').map(function () {return this.value;}).get(); 		
-	staff=generate_scale_exercise(scale_type, stroke_type, bars_number);
+	var foot_pattern=$('#ftp_selec').val();
+	
+	staff=generate_scale_exercise(scale_type, stroke_type, foot_pattern, bars_number, (renderParams.width/1280));
 	var render_str=preamble.concat(staff);
 	bars_number=8;
-	var midistaff=compose_midi_staff(staff,midipreamble,'4/4');
+	//var midistaff=compose_midi_staff(staff,midipreamble,'4/4');
+	midistaff=staff;
 	render_scores(render_str, midistaff); 
 
 }
@@ -145,8 +148,8 @@ function render_comping_exercise(){
 		midistr= midistr.concat("[^F,,4e4] (3:2:3[^F,,2e2]z2^F,,2 [^F,,4e4] (3:2:3[^F,,2e2]z2^F,,2 |");	
 	}
 	midistaff = staff.replace(/\n/g, '');
-	midistaff = midistaff.replace(/F/g, 'C,,');
-	midistaff = midistaff.replace(/c/g, 'D,,');
+	midistaff = midistaff.replace(/F/g, 'C,,'); // Bass Drum
+	midistaff = midistaff.replace(/c/g, 'D,,'); //Snare
 	midistr=midipreamble.concat(midistaff,"\n[V:v2]\n| ", midistr, " |]\n ");
 	
 	render_scores(render_str, midistr); 

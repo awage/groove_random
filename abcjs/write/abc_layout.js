@@ -210,7 +210,7 @@ ABCJS.write.Layout.prototype.printBeam = function() {
 	  beamelem = new ABCJS.write.BeamElem(dir ? "up" : "down");
 	  //beamelem = new ABCJS.write.BeamElem("up");
 	  var oldDir = this.stemdir;
-	  this.stemdir = dir ? "up" : "down";
+	  this.stemdir = (dir ? "up" : "down");
 	  //this.stemdir = "up" ;
     while (this.getElem()) {
       abselem = this.printNote(this.getElem(),true);
@@ -249,7 +249,7 @@ ABCJS.write.Layout.prototype.printNote = function(elem, nostem, dontDraw) { //st
   var grace= null;
   this.roomtaken = 0; // room needed to the left of the note
   this.roomtakenright = 0; // room needed to the right of the note
-  var dotshiftx = 0; // room taken by chords with displaced noteheads which cause dots to shift
+  var dotshiftx = 3; // room taken by chords with displaced noteheads which cause dots to shift
   var c="";
   var flag = null;
   var additionalLedgers = []; // PER: handle the case of [bc'], where the b doesn't have a ledger line
@@ -329,8 +329,7 @@ ABCJS.write.Layout.prototype.printNote = function(elem, nostem, dontDraw) { //st
     elem.minpitch = elem.pitches[0].verticalPos;
       this.minY = Math.min(elem.minpitch, this.minY);
     elem.maxpitch = elem.pitches[elem.pitches.length-1].verticalPos;
-    var dir = (elem.averagepitch>=7) ? "down": "up";  // Aqui se decide si va arriba o abajo. 
-    //var dir = "up";
+    var dir = (elem.averagepitch>=7) ? "down": "up";      
     if (this.stemdir) dir=this.stemdir;
     
     // determine elements of chords which should be shifted
@@ -565,17 +564,21 @@ ABCJS.write.Layout.prototype.printNote = function(elem, nostem, dontDraw) { //st
   }
     
 
-  if (elem.startTriplet) {
-	
-    this.triplet = new ABCJS.write.TripletElem(elem.startTriplet, elem.mid_nbr, notehead, null, true); // above is opposite from case of slurs
-	  if (!dontDraw)
-    this.voice.addOther(this.triplet);
+  if (elem.startTriplet) {	
+    this.triplet = new ABCJS.write.TripletElem(elem.startTriplet, elem.mid_nbr, notehead, null, true); // above is opposite from case of slurs	  
   }
 
+  if(this.tripletmultiplier!==1 && this.triplet){
+	  this.triplet.top = Math.max(this.triplet.top, abselem.top); // keep the highest element to avoid collisions
+  } 
+
   if (elem.endTriplet && this.triplet) {
-    this.triplet.anchor2 = notehead;
-    /* This will fix the problem of 3)z2B2B2 However I don't know what is the effect on other things*/
-    //this.triplet = null;
+    this.triplet.anchor2 = notehead; 
+    
+    if (!dontDraw)
+		this.voice.addOther(this.triplet);  // We add the tripplet to the voice only once finished.
+    
+    this.triplet = null;    
     this.tripletmultiplier = 1;
   }
 

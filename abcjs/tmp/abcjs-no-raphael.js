@@ -5863,14 +5863,15 @@ ABCJS.write.VoiceElement.prototype.layoutOneItem = function (x, spacing) {
     x+=child.getExtraWidth()-er;
   }
   child.x=x;
-  x+=(spacing*Math.sqrt(child.duration*8)); // add necessary duration space
+  //x+=(spacing*Math.sqrt(child.duration*8)); // add necessary duration space
+  x+=(spacing*child.duration); // add space linearly to layout correctly 5th and 7th notes
   this.nextminx = child.x+child.getMinWidth(); // add necessary layout space
-  if (this.i!==this.ii-1) this.nextminx+=child.minspacing; // add minimumspacing except on last elem
+  if (this.i!==this.ii-1) this.nextminx+=(child.minspacing+5); // add minimumspacing except on last elem
   if (this.nextminx > x) {
     x = this.nextminx;
     this.spacingunits=0;
   } else {
-    this.spacingunits=Math.sqrt(child.duration*8);
+    this.spacingunits=child.duration; // the same as before for the correct layout of 5th and 7th
   }
   this.nextx = x;
   // contribute to staff y position
@@ -6213,32 +6214,36 @@ ABCJS.write.TripletElem = function(number, mid_nbr, anchor1, anchor2, above) {
   this.anchor2 = anchor2; // must have a .x property or be null (means ends at the end of the line)
   this.above = above;
   this.number = number;
-  this.mid_nbr=mid_nbr;
+  this.mid_nbr=mid_nbr;  
+  this.top=null;
 };
 
 ABCJS.write.TripletElem.prototype.draw = function (printer, linestartx, lineendx) {
   // TODO end and beginning of line
   if (this.anchor1 && this.anchor2) {
-    var ypos = this.above?16:-1;	// PER: Just bumped this up from 14 to make (3z2B2B2 (3B2B2z2 succeed. There's probably a better way.
-    //alert('we are here');
-    if (this.anchor1.parent.beam && 
-	this.anchor1.parent.beam===this.anchor2.parent.beam) {
+    
+    var ypos = this.above?(Math.max(this.top,11)+3):-1;	// Select the top or bottom element to display the staff.
+    
+    if (this.anchor1.parent.beam &&  (this.anchor1.parent.beam===this.anchor2.parent.beam)){
       var beam = this.anchor1.parent.beam;
       this.above = beam.asc;
       ypos = beam.pos;     
-    } else {
-      this.drawLine(printer,printer.calcY(ypos));
+    } 
+    else {
+      this.drawLine(printer,printer.calcY(ypos));      
     }
     var xsum = this.anchor1.x+this.anchor2.x;
     var ydelta = 0;
     if (beam) {
       if (this.above) {
-	xsum += (this.anchor2.w + this.anchor1.w);
-	ydelta = 4;
-      } else {
-	ydelta = -4;
+		xsum += (this.anchor2.w + this.anchor1.w);
+		ydelta = 4;
       }
-    } else {
+      else{
+		ydelta = -4;
+      }
+    }
+    else {
       xsum += this.anchor2.w;
     }
     
@@ -6319,6 +6324,7 @@ ABCJS.write.BeamElem.prototype.calcDir = function() {
 	var average = this.average();
 //	var barpos = (this.isgrace)? 5:7;
 	this.asc = (this.forceup || this.isgrace || average<7) && (!this.forcedown); // hardcoded 6 is B 7 is c
+	//this.asc=1;
 	return this.asc;
 };
 
@@ -6623,7 +6629,7 @@ ABCJS.write.Layout.prototype.printBeam = function() {
 	  beamelem = new ABCJS.write.BeamElem(dir ? "up" : "down");
 	  //beamelem = new ABCJS.write.BeamElem("up");
 	  var oldDir = this.stemdir;
-	  this.stemdir = dir ? "up" : "down";
+	  this.stemdir = (dir ? "up" : "down");
 	  //this.stemdir = "up" ;
     while (this.getElem()) {
       abselem = this.printNote(this.getElem(),true);
@@ -6662,7 +6668,7 @@ ABCJS.write.Layout.prototype.printNote = function(elem, nostem, dontDraw) { //st
   var grace= null;
   this.roomtaken = 0; // room needed to the left of the note
   this.roomtakenright = 0; // room needed to the right of the note
-  var dotshiftx = 0; // room taken by chords with displaced noteheads which cause dots to shift
+  var dotshiftx = 3; // room taken by chords with displaced noteheads which cause dots to shift
   var c="";
   var flag = null;
   var additionalLedgers = []; // PER: handle the case of [bc'], where the b doesn't have a ledger line
@@ -6742,8 +6748,7 @@ ABCJS.write.Layout.prototype.printNote = function(elem, nostem, dontDraw) { //st
     elem.minpitch = elem.pitches[0].verticalPos;
       this.minY = Math.min(elem.minpitch, this.minY);
     elem.maxpitch = elem.pitches[elem.pitches.length-1].verticalPos;
-    var dir = (elem.averagepitch>=7) ? "down": "up";  // Aqui se decide si va arriba o abajo. 
-    //var dir = "up";
+    var dir = (elem.averagepitch>=7) ? "down": "up";      
     if (this.stemdir) dir=this.stemdir;
     
     // determine elements of chords which should be shifted
@@ -6978,17 +6983,21 @@ ABCJS.write.Layout.prototype.printNote = function(elem, nostem, dontDraw) { //st
   }
     
 
-  if (elem.startTriplet) {
-	
-    this.triplet = new ABCJS.write.TripletElem(elem.startTriplet, elem.mid_nbr, notehead, null, true); // above is opposite from case of slurs
-	  if (!dontDraw)
-    this.voice.addOther(this.triplet);
+  if (elem.startTriplet) {	
+    this.triplet = new ABCJS.write.TripletElem(elem.startTriplet, elem.mid_nbr, notehead, null, true); // above is opposite from case of slurs	  
   }
 
+  if(this.tripletmultiplier!==1 && this.triplet){
+	  this.triplet.top = Math.max(this.triplet.top, abselem.top); // keep the highest element to avoid collisions
+  } 
+
   if (elem.endTriplet && this.triplet) {
-    this.triplet.anchor2 = notehead;
-    /* This will fix the problem of 3)z2B2B2 However I don't know what is the effect on other things*/
-    //this.triplet = null;
+    this.triplet.anchor2 = notehead; 
+    
+    if (!dontDraw)
+		this.voice.addOther(this.triplet);  // We add the tripplet to the voice only once finished.
+    
+    this.triplet = null;    
     this.tripletmultiplier = 1;
   }
 
@@ -7472,7 +7481,7 @@ ABCJS.write.Printer = function(paper, params) {
   params = params || {};
   this.y = 0;
   this.paper = paper;
-  this.space = 3*ABCJS.write.spacing.SPACE;
+  this.space = 60*ABCJS.write.spacing.SPACE;
   this.glyphs = new ABCJS.write.Glyphs();
   this.listeners = [];
   this.selected = [];

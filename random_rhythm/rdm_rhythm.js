@@ -1,5 +1,5 @@
 //    rdm_rhythm.js: Generators to produce random scores
-//    Copyright (C) 2012 Alexandre Wagemakers (alexandre dot wagemakers at gmail dot com)
+//    Copyright (C) 2013 Alexandre Wagemakers (alexandre dot wagemakers at gmail dot com)
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ function generate_reading_exercise_78(ex_type, difficulty, width_factor, num_bar
 		if(i%meter_in==0 && i!=(num_notes-1) && i!=0)
 			staff=staff.concat("| ");
 
-		if(((notes_per_line >  40*width_factor)&& (i%meter_in==0)) ){
+		if(((notes_per_line >  30*width_factor)&& (i%meter_in==0)) ){
 			staff=staff.concat("\n ");
 			//alert(notes_per_line);
 			notes_per_line=0; 
@@ -132,7 +132,7 @@ num_notes=num_bars*meter_in;
 		if(i%meter_in==0 && i!=(num_notes-1) && i!=0)
 			staff=staff.concat("| ");
 
-		if(((notes_per_line >  40*width_factor)&& (i%meter_in==0)) ){
+		if(((notes_per_line >  30*width_factor)&& (i%meter_in==0)) ){
 			staff=staff.concat("\n ");			
 			notes_per_line=0; 
 		}
@@ -262,8 +262,7 @@ function print_score_simple(exnum, level){
 
 	}
 	if(level==2){
-	    var patterns=[" (5BBBBB ", " (5 BzBBB "," (5 BBzBB "," (5 BBBzB ", " (5 BBBzB ", " (5 BBBBz ", " (5 zBBBB ", " (5 zBzBz ", 
-	    " (5 zzBBz ", " (5 zBBzz ", " (5 BzBBz ", " (5 BzBzB ", " (5 zBBBz ", " (5 zzBBB ", " (5 BzzzB "];
+	    var patterns=[" (5BBBBB ", " (5 BzBBB "," (5 BBzBB "," (5 BBBzB ", " (5 BBBzB ", " (5 BBBBz ", " (5 zBBBB ", " (5 zBzBz ", " (5 zzBBz ", " (5 zBBzz ", " (5 BzBBz ", " (5 BzBzB ", " (5 zBBBz ", " (5 zzBBB ", " (5 BzzzB "];
 	    num_pat=Math.floor(patterns.length*Math.random());
  	    ret.str=patterns[num_pat]; 	     
 		ret.num_notes=5;
@@ -278,7 +277,7 @@ function print_score_simple(exnum, level){
 		ret.num_notes=6;
 	}
 	if(level==2){
-	    var patterns=[" (6BBBBBB ", " (6 BzBBBB "," (6 BBzBBB "," (6 BBBzBB "," (6 BBBBzB "," (6 BBBBBz "];
+	    var patterns=[" (6BBBBBB "," (6zBBBBB "," (6BzBBBB "," (6BBzBBB "," (6BBBzBB "," (6BBBBzB "," (6BBBBBz "," (6BzBBzB "," (6BzBzBz "," (6BzBzBB "," (6BBzBBz "," (6BzzzzB "," (6zBzBzB "," (6zBBBzB "," (6zBBzBB "," (6zzBBzB "," (6zzBzzB "," (6zzzzzB "];
 	    num_pat=Math.floor(patterns.length*Math.random());
  	    ret.str=patterns[num_pat]; 		   
 		ret.num_notes=6;
@@ -291,8 +290,8 @@ function print_score_simple(exnum, level){
 		ret.str=" (7BBBBBBB "; ret.num_notes=7;
 	}
 	if(level==2){
-	    var patterns=[" (7BBBBBBB "," (7 BzBBBBB "," (7 BBzBBBB "," (7 BBBzBBB ", " (7 BBBBzBB "," (7 BBBBBzB "];	   
-		num_pat=Math.floor(patterns.length*Math.random());
+	    var patterns=[" (7BBBBBBB "," (7BzBBBBB "," (7BBzBBBB "," (7BBBzBBB "," (7BBBBzBB "," (7BBBBBzB "," (7BBBBBBz "," (7zBBzBBz "," (7BzBzBzB "," (7zBBBzBB "," (7BBBBBBB "," (7BBzzBBB "," (7zzBBBzz "," (7BBBzzBB "," (7BzzBBBz "," (7zBBBzzB "," (7BzzBBBB "," (7zzBBBzz "];	   
+	    num_pat=Math.floor(patterns.length*Math.random());
  	    ret.str=patterns[num_pat]; 		   
 		ret.num_notes=7;	
 	}
@@ -307,7 +306,7 @@ function print_score_simple(exnum, level){
 	    var patterns=[" (3:2:3z4B4B4 "," (3:2:3B4z4B4 "," (3:2:3B4B4z4 "," (3:2:3z4z4B4 "," (3:2:3B4z4z4 "," (3:2:3B4z4z4 "];
 	    num_pat=Math.floor(patterns.length*Math.random());
  	    ret.str=patterns[num_pat]; 	
-		ret.str=" (3:2:3B4z4z4 "; ret.num_notes=3;
+		ret.num_notes=3;
 		
 	}
 	
@@ -318,7 +317,7 @@ function print_score_simple(exnum, level){
 		ret.str=" (5:4:5B2B2B2B2B2 "; ret.num_notes=5;
 	}
 	if(level==2){
-	    var patterns=[" (5:4:5B2B2B2B2B2 "];
+	    var patterns=[" (5B2B2B2B2B2 ", " (5 B2z2B2B2B2 "," (5 B2B2z2B2B2 "," (5 B2B2B2z2B2 ", " (5 B2B2B2z2B2 ", " (5 B2B2B2B2z2 ", " (5 z2B2B2B2B2 ", " (5 z2B2z2B2z2 ", " (5 z2z2B2B2z2 ", " (5 z2B2B2z2z2 ", " (5 B2z2B2B2z2 ", " (5 B2z2B2z2B2 ", " (5 z2B2B2B2z2 ", " (5 z2z2B2B2B2 ", " (5 B2z2z2z2B2 "];
 	    num_pat=Math.floor(patterns.length*Math.random());
  	    ret.str=patterns[num_pat]; 	
 	    ret.num_notes=5;
@@ -332,7 +331,7 @@ function print_score_simple(exnum, level){
 		ret.str=" (7:4:7B2B2B2B2B2B2B2 "; ret.num_notes=7;
 	}
 	if(level==2){
-	    var patterns=[" (7:4:7B2B2B2B2B2B2B2 "];
+	    var patterns=[" (7B2B2B2B2B2B2B2 "," (7B2z2B2B2B2B2B2 "," (7B2B2z2B2B2B2B2 "," (7B2B2B2z2B2B2B2 "," (7B2B2B2B2z2B2B2 "," (7B2B2B2B2B2z2B2 "," (7B2B2B2B2B2B2z2 "," (7z2B2B2z2B2B2z2 "," (7B2z2B2z2B2z2B2 "," (7z2B2B2B2z2B2B2 "," (7B2B2B2B2B2B2B2 "," (7B2B2z2z2B2B2B2 "," (7z2z2B2B2B2z2z2 "," (7B2B2B2z2z2B2B2 "," (7B2z2z2B2B2B2z2 "," (7z2B2B2B2z2z2B2 "," (7B2z2z2B2B2B2B2 "," (7z2z2B2B2B2z2z2 "];
 	    num_pat=Math.floor(patterns.length*Math.random());
  	    ret.str=patterns[num_pat]; 	
 		ret.num_notes=7;
@@ -826,7 +825,7 @@ function print_coordination_score(ex_type, level){
 }
 
 
-function generate_scale_exercise(scale_type, stroke_type, bars_number){
+function generate_scale_exercise(scale_type, stroke_type, foot_pattern, bars_number, width_factor){
 
     
 var meter=4;
@@ -857,28 +856,42 @@ if(stroke_type=='1'){
 nota="B";
 }
 
-
 if(stroke_type=='2'){
-nota=["B","B","F","F"];
+nota=["g","g","B","B"];
 }
 
 if(stroke_type=='3'){
-nota=["B","F","B","B","F","B","F","F"];
+nota=["g","B","g","g","B","g","B","B"];
+}
+
+
+fp_list=['F8 D8 F8 D8','F8 D4F4 F8 D4F4'];
+if(foot_pattern==='None'){
+	
+	fp='';
+}
+else{
+	var fp=fp_list[parseInt(foot_pattern)-1];
+	var line_v2=new Array();
 }
 
 
 
-var line="";
+var line_v1=new Array();
+
 var groups=["","","", "(3:2:3", "", "(5:4:5", "(6:4:6", "(7:4:7", ""]; 
 var pat="";
+var tmp_str="";
 ind=0;
 for(i=2; i<=8 ; i++){
 	if(i==4 || i==8)
 		note_length=note_length/2; 
-		
+	
+	tmp_str="";
 	ind=0;
 	j=1;
 	do{
+
 		/*Form basic pattern*/
 		pat=groups[i]; 
 		
@@ -887,20 +900,70 @@ for(i=2; i<=8 ; i++){
 			ind++;		
 		}	
 
-		line=line.concat(pat," "); 
+		tmp_str=tmp_str.concat(pat," "); 
 		
 		if(((ind%nota.length)!=0) && (j==(Math.round(meter/mult_note)))){
 			j=0; //Añadimos una vuelta.
-			line=line.concat("|"); 
+			line_v1.push(tmp_str); 
+			tmp_str="";					
 		}
-					
+		
 		j++;
 	}while(j<=(meter/mult_note))
-	line=line.concat("|\n"); 
-
-}
 	
-    return line;    
+	line_v1.push(tmp_str); 
+	
+}
+
+/* join the voices and insert line breaks */
+if(width_factor>0.8) var line_break=3; 
+else if(width_factor>0.5) var line_break=2; 
+else var line_break=1;
+
+var scale_str="";
+var v1="[V:v1]";
+var v2="[V:v2]";
+var bars_completed=0; 
+for(var k=0; k<line_v1.length; k++){
+
+	v1=v1.concat(line_v1[k],"|"); 
+		
+	if(fp!=''){
+		v2=v2.concat(fp,'|');
+	}
+	
+	if(!((k+1)%line_break) && k!=0){
+		
+		if(k!=(line_v1.length-1)){
+			if(fp!='')
+				scale_str=scale_str.concat(v1,'\n',v2,'\n');
+			else
+				scale_str=scale_str.concat(v1,'\n');		
+			v1="[V:v1]";			
+			v2="[V:v2]";
+			
+		}
+		else{
+			if(fp!='')
+				scale_str=scale_str.concat(v1,']\n',v2,']\n');
+			else
+				scale_str=scale_str.concat(v1,']\n');		
+		}
+		bars_completed+=line_break; 
+	}
+	
+}
+
+// Check if there are bars left in the Buffer and close the score: 
+for(k=bars_completed; k<line_v1.length; k++){
+	if(fp!='')
+		scale_str=scale_str.concat('[V:v1]',line_v1[k],'|]\n','[V:v2]',fp,'|]\n');
+	else
+		scale_str=scale_str.concat('[V:v1]',line_v1[k],'|]\n');			
+}
+
+
+    return scale_str;    
 }
 
 
@@ -1046,9 +1109,7 @@ function generate_pattern_paradidles(bars_number){
 	var width_factor=0.9;
 
     for(i=0; i<bars_number ; i++){
-
 				
-
 		str=print_partitura_paradidle();
 		
 		staff=staff.concat(str);
