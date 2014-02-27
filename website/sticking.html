@@ -10,21 +10,27 @@
        <link href="css/bootstrap-responsive.css" rel="stylesheet">
        -->
        <link href="css/styles.css" rel="stylesheet" type="text/css">
-      <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-       <link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
        <link href="css/jquery.slider.min.css" rel="stylesheet" type="text/css">
+ 		 <link href="css/magic-bootstrap.css" rel="stylesheet">
     </head>
     <body>
   
     
-    <div class="navbar">
-    <div class="navbar-inner">
-  
-    <!-- Be sure to leave the brand out there if you want it shown -->
-    <a class="brand" href="#">RANDOM GROOVES</a>
-     
+ <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="nav-arriba">
+    
+     <div class="navbar-header">
+     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">RANDOM GROOVES</a>
+    </div>
     <!-- Everything you want hidden at 940px or less, place within here -->
-    <ul class="nav">
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+ 	<ul class="nav navbar-nav">    
+
        <li><a href="index.html">Home</a></li>
 		<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -41,13 +47,10 @@
 		<li><a href="contact.html">Contact</a></li>
 		<li><a href="about.html">About</a></li>
 		</ul>   		
-	</div>
-	 <ul class="breadcrumb pull-right">
-    <li><a href="home.html">Home</a> <span class="divider">/</span></li>
-    <li class="active">Sticking</li>
-    </ul>	
-    </div>
-    </div>
+	</div>	
+    
+</nav>
+
     
     
       <div id="wrap">
@@ -72,8 +75,7 @@
 The sticking exercises aim at improving the hand techniques. 
 </p>
 <p>
-The coordination exercises can help you to improve coordination and create 
-nice poliphony.
+The coordination exercises can help you to improve coordination and create nice polyphony.
 </p>
 
 <br>
@@ -85,18 +87,14 @@ nice poliphony.
 </div>
 </div>
 </div>
-
-
-        
-
-      </div>
-
-
-    </div>
+</div>
+</div>
 
    
     <!-- Modal -->
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+     <div class="modal-content">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
     <h3 id="myModalLabel">Generate Rhythms!!</h3>
@@ -116,19 +114,15 @@ nice poliphony.
 		<div class="menucontent">
 	  <form>
 	  <div class="control-group">
-		<label class="checkbox"><input type="checkbox"  class='sticking' value="1" checked /> 8th</label>
-		<label class="checkbox"><input type="checkbox"  class='sticking' value="2" /> triplets</label>
-		<label class="checkbox"><input type="checkbox"  class='sticking' value="3" /> 16th</label>
+		<div class="checkbox"><label><input type="checkbox"  class='sticking' value="1" checked /> 8th</label></div>
+		<div class="checkbox"><label><input type="checkbox"  class='sticking' value="2" /> triplets</label></div>
+		<div class="checkbox"><label><input type="checkbox"  class='sticking' value="3" /> 16th</label></div>
 	  </div>
 	  </form>
 	  </div>
 	  <br>
-      
-   
+     
     </div>
- 
- 
-    
     <div class="tab-pane" id="profile">
  
 	 <div class="menucontent">
@@ -136,19 +130,19 @@ nice poliphony.
 		  <form>
 		  <div class="control-group">		
 		  <div class="controls span1">
-			<label class="radio"><input type="radio"  name="md" class="md_form" value="0" /> 4th</label>
-			<label class="radio"><input type="radio"  name="md" class="md_form" value="1" checked /> 8th</label>
-			<label class="radio"><input type="radio"  name="md" class="md_form" value="2" /> triplets </label>
+			<div class="radio"><label><input type="radio"  name="md" class="md_form" value="0" />4th</label></div>
+			<div class="radio"><label><input type="radio"  name="md" class="md_form" value="1" checked />8th</label></div>
+			<div class="radio"><label><input type="radio"  name="md" class="md_form" value="2" />triplets</label></div>
 		  </div>
 		  <div class="controls span1">
-			<label class="radio"><input type="radio"  name="md" class="md_form" value="3" /> 16th</label>
-			<label class="radio"><input type="radio"  name="md" class="md_form" value="4" /> 5th </label>		  
-			<label class="radio"><input type="radio"  name="md" class="md_form" value="5" /> 6th </label>
+			<div class="radio"><label><input type="radio"  name="md" class="md_form" value="3" />16th</label></div>
+			<div class="radio"><label><input type="radio"  name="md" class="md_form" value="4" />5th</label>	</div>	  
+			<div class="radio"><label><input type="radio"  name="md" class="md_form" value="5" />6th</label></div>
 		 </div>
 		  <div class="controls span1">
-			<label class="radio"><input type="radio"  name="md" class="md_form" value="6" /> 7th</label>
-			<label class="radio"><input type="radio"  name="md" class="md_form" value="7" /> 3:4</label>
-			<label class="radio"><input type="radio"  name="md" class="md_form" value="8" /> 5:4	</label>  
+			<div class="radio"><label><input type="radio"  name="md" class="md_form" value="6" />7th</label></div>
+			<div class="radio"><label><input type="radio"  name="md" class="md_form" value="7" />3:4</label></div>
+			<div class="radio"><label><input type="radio"  name="md" class="md_form" value="8" />5:4</label>  </div>
 		  </div>
 		  </div>  
 		  </form>
@@ -160,19 +154,19 @@ nice poliphony.
 		  <form>
 			<div class="control-group">		
 			<div class="controls span1">
-				<label class="radio"><input type="radio"  name="mi" class="mi_form" value="0" /> 4th</label>
-				<label class="radio"><input type="radio"  name="mi" class="mi_form" value="1" checked /> 8th</label>
-				<label class="radio"><input type="radio"  name="mi" class="mi_form" value="2" /> triplets </label>
+				<div class="radio"><label><input type="radio"  name="mi" class="mi_form" value="0" />4th</label></div>
+				<div class="radio"><label><input type="radio"  name="mi" class="mi_form" value="1" checked />8th</label></div>
+				<div class="radio"><label><input type="radio"  name="mi" class="mi_form" value="2" />triplets</label></div>
 				
 			</div>
 			<div class="controls span1">	
-				<label class="radio"><input type="radio"  name="mi" class="mi_form" value="3" /> 16th</label>
-				<label class="radio"><input type="radio"  name="mi" class="mi_form" value="4" /> 5th </label>
-				<label class="radio"><input type="radio"  name="mi" class="mi_form" value="5" /> 6th</label>
+				<div class="radio"><label><input type="radio"  name="mi" class="mi_form" value="3" />16th</label></div>
+				<div class="radio"><label><input type="radio"  name="mi" class="mi_form" value="4" />5th</label></div>
+				<div class="radio"><label><input type="radio"  name="mi" class="mi_form" value="5" />6th</label></div>
 				
 			</div>
 			<div class="controls span1">	
-				<label class="radio"><input type="radio"  name="mi" class="mi_form" value="6" /> 7th </label>  
+				<div class="radio"><label><input type="radio"  name="mi" class="mi_form" value="6" />7th</label>  </div>
 			</div>
 			</div>	
 		  </form>
@@ -203,21 +197,25 @@ nice poliphony.
     <button class="btn btn-primary"  onClick = "generate_sticking();">Generate</button>
     </div>
     </div>
+    </div>
+    </div>
 
-	<div class="navbar navbar-fixed-bottom">
-    
-
-      <div class="footercontent" >
-	   <a href="#myModal" role="button" class="btn btn-large btn-primary" data-toggle="modal" onClick="$('#myTab a:first').tab('show');">START HERE</a>    
-	   <a href="#myModal" class="btn btn-info btn-large" data-toggle="modal" onClick="$('#myTab a:last').tab('show');"><img  src="img/metronome.png" alt="" width='10' height='10'> Metronome</a>	   	   
-	   <a href="#" class="btn btn-info btn-large" onClick='print_midi("midicontainer");'><i class="icon-white icon-download-alt"></i> Save Files</a>
-	   <a href="#" class="btn btn-info btn-large" onClick='printDiv("notation");'><i  class="icon-white icon-print"></i> Print</a>
+	
+ <nav class="navbar navbar-default navbar-fixed-bottom">
+     <div class="container-fluid">
+		<form class="navbar-form navbar-left">     
+      <div class="btn-group">
+	   <a href="#myModal" role="button" class="btn btn-danger" data-toggle="modal" onClick="$('#myTab a:first').tab('show');"><span class="glyphicon glyphicon-home"></span> START!</a>    
+	   <a href="#myModal" class="btn btn-primary" data-toggle="modal" onClick="$('#myTab a:last').tab('show');"><span class="glyphicon glyphicon-time"></span> Metronome</a>	   	   
+	   <a href="#" class="btn btn-primary" onClick='print_midi("midicontainer");'><span class="glyphicon glyphicon-save"></span> Save Files</a>
+	   <a href="#" class="btn btn-primary" onClick='printDiv("notation");'><span class="glyphicon glyphicon-print"></span> Print</a>
    
 	  
-	     <div class="btn-group dropup">
-		<button id='play_pop' class="btn btn-info btn-large"><i id='player_icon' class="icon-white icon-play"></i> Play</button>
-		<button class="btn btn-info btn-large dropdown-toggle" data-toggle="dropdown">
-		<i class="icon-white icon-chevron-up"></i>BPM
+	   
+	   <div class="btn-group dropup">
+		<button id='play_pop' class="btn btn-primary"><span class="glyphicon glyphicon-play"></span> Play</button>
+		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+		<span class="glyphicon glyphicon-chevron-up"></span> BPM
 		</button>
 		<ul class="dropdown-menu">
 		<!-- SLIDER FOR BPM -->
@@ -226,22 +224,23 @@ nice poliphony.
 		<br>
 		</ul>
 		</div>
-	   
-	   
+		</div>
+		</form>
+	     
       </div>
-
-    </div>
+    
+</nav>
 
     
     <audio src="losticks.wav"  id="tickwav" />  
     
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
-    <script src="js/abcjs_basic.min.js" type="text/javascript"></script>	
+        <script src="js/abcjs_basic.min.js" type="text/javascript"></script>	
 	<script src="js/audio.min.js" type="text/javascript"></script>
-    <script src="js/rdm_rhythm.min.js" type="text/javascript"></script>
+        <script src="js/rdm_rhythm.min.js" type="text/javascript"></script>
 	<script src="js/jq_plugins.min.js"></script>
-
+  
     <script>
 	// global variable to trigger the generation function
 	var generate_str='sticking';
@@ -252,6 +251,9 @@ nice poliphony.
 		generate_str=$(this).attr('id');
     });
         
+         /*Plugin to hide navbar when scrolling*/
+	$("#nav-arriba").scrollNav({"bootstrap_mobile": true});
+   
     $(function() {
 	/*Render ABC bits in the text*/
 	$.each($('.abc'),  

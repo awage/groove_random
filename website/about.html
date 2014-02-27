@@ -3,7 +3,7 @@
     <head>
     <title>Random Grooves</title>
     <!-- Bootstrap -->
-    <style type="text/css">
+<style type="text/css">
 
     
 </style>
@@ -13,21 +13,27 @@
        <link href="css/bootstrap-responsive.css" rel="stylesheet">
        -->
        
-      <link href="css/bootstrap.css" rel="stylesheet">
-       <link href="css/bootstrap-responsive.css" rel="stylesheet">
-       <link href="css/jquery.slider.min.css" rel="stylesheet" type="text/css"/>
+       <link href="css/magic-bootstrap.css" rel="stylesheet">       
+     
     </head>
     <body>
   
     
-      <div class="navbar">
-    <div class="navbar-inner">
-  
-    <!-- Be sure to leave the brand out there if you want it shown -->
-    <a class="brand" href="#">RANDOM GROOVES</a>
-     
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    
+     <div class="navbar-header">
+     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">RANDOM GROOVES</a>
+    </div>
     <!-- Everything you want hidden at 940px or less, place within here -->
-    <ul class="nav">
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+ <ul class="nav navbar-nav">    
+
        <li><a href="index.html">Home</a></li>
 		<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -45,21 +51,22 @@
 		<li><a href="about.html">About</a></li>
 		</ul>   		
 	</div>	
-    </div>
-    </div>
+    
+    </nav>
     
     
      
 <div class='container'>
+<br>
 <div class="page-header">
    <h1>Special thanks to:</h1>
 </div>
 
 
 <div class='row'>
-<div class='span6'>
+<div class='col-md-6'>
 <h1>The Web</h1>
-Thank to the countless efforts of sleepless devellopers that are building the internet and particularly:
+Thank to the countless efforts of sleepless developers that are building the internet and particularly:
 <ul>
      <li><p><a href="">ABCjs team</a> for the music rendering engine.</p></li>
      <li><p>Javascripts and jQuery for the programming language.</p></li>
@@ -76,7 +83,7 @@ licenses. <b>The sources are available for download</b> at: <a href='https://git
 <hr>
 </div>
 
-<div class='span6'>
+<div class='col-md-6'>
 
 <h1>The drum legends</h1>
 <p>
@@ -96,7 +103,7 @@ The inspiration to create this page came from great drum books. I recommend the 
 
 </div>
 
-<div class='span6'>
+<div class='col-md-6'>
 
 <h1>The Friends</h1>
 <p>

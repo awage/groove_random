@@ -112,6 +112,7 @@ function render_scales_exercise(){
 
 	set_options();
 		
+	//var preamble='X:1\nT: Scale Exercise\nC:Alexandre Wagemakers\nM:4/4\nL: 1/32\nV:v1 clef=perc name="Hands" snm="h"\nV:v2 clef="perc"  name="feet"  snm="f"\n%%stretchlast 0\nK: clef=perc\n';
 	var preamble='X:1\nT: Scale Exercise\nC:Alexandre Wagemakers\nM:4/4\nL: 1/32\n%%score (v1 v2)\nV:v1 clef=perc name="Hands" snm="h"\nV:v2 clef="perc"  name="feet"  snm="f"\n%%stretchlast 0\nK: clef=perc\n';
 	var midipreamble= "X:1\nM: 4/4\nL:1/32\nK:clef=perc\n"; 
 	var scale_type=$('input:radio:checked.sc1').map(function () {return this.value;}).get(); 		

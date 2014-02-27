@@ -853,19 +853,19 @@ if(scale_type=='3'){
 }	
 
 if(stroke_type=='1'){
-nota="B";
+nota="c";
 }
 
 if(stroke_type=='2'){
-nota=["g","g","B","B"];
+nota=["g","g","c","c"];
 }
 
 if(stroke_type=='3'){
-nota=["g","B","g","g","B","g","B","B"];
+nota=["g","c","g","g","c","g","c","c"];
 }
 
 
-fp_list=['F8 D8 F8 D8','F8 D4F4 F8 D4F4'];
+fp_list=['F8 D8 F8 D8','F8 D4F4 F8 D4F4', 'F8 D4F4 z8 [D8F8]', '[D12F12]  F4 D8 F8'];
 if(foot_pattern==='None'){
 	
 	fp='';

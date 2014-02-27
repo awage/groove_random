@@ -12,7 +12,7 @@ cat audio.js midifile.js replayer.js stream.js synth.js > ../audio_player.js
 
 echo "Concatenating plugins..."
 cd ../jquery_plugins
-cat jquery.metronome.js jquery.slider.min.js > ../jquery_plugs.js
+cat jquery.metronome.js jquery.scrollnav.js jquery.slider.min.js > ../jquery_plugs.js
 
 echo "Concatenating random generators..."
 cd ../random_rhythm

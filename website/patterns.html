@@ -5,27 +5,31 @@
     <!-- Bootstrap -->
 
 
-       <!-- 
-        <link href="css/bootswatcher.css" rel="stylesheet">
-       <link href="css/bootstrap.css" rel="stylesheet">
-       <link href="css/bootstrap-responsive.css" rel="stylesheet">
-       -->
-	<link href="css/styles.css" rel="stylesheet">       
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/jquery.slider.min.css" rel="stylesheet" type="text/css">
+   <link href="css/styles.css" rel="stylesheet">       
+   <link href="css/magic-bootstrap.css" rel="stylesheet">      
+   <!--link href="css/bootstrap.css" rel="stylesheet"-->      
+   <link href="css/jquery.slider.min.css" rel="stylesheet" type="text/css">
+
     </head>
     <body>
-  
+      
+<div class="container">
+          
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="nav-arriba">
     
-    <div class="navbar">
-    <div class="navbar-inner">
-  
-    <!-- Be sure to leave the brand out there if you want it shown -->
-    <a class="brand" href="#">RANDOM GROOVES</a>
-     
+     <div class="navbar-header">
+     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">RANDOM GROOVES</a>
+    </div>
     <!-- Everything you want hidden at 940px or less, place within here -->
-    <ul class="nav">
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+ 	<ul class="nav navbar-nav">    
+
        <li><a href="index.html">Home</a></li>
 		<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -42,19 +46,16 @@
 		<li><a href="contact.html">Contact</a></li>
 		<li><a href="about.html">About</a></li>
 		</ul>   		
-	</div>
-	 <ul class="breadcrumb pull-right">
-    <li><a href="home.html">Home</a> <span class="divider">/</span></li>
-    <li class="active">Patterns</li>
-    </ul>	
-    </div>
-    </div>
-        
-      <div id="wrap">
-
+	</div>	
+    
+</nav>
+    
+    
+     <div id="wrap">
+     
+   
       <!-- Begin page content -->
-      <div class="container">
-
+      
         
         <div id="maincontent">
 
@@ -64,8 +65,8 @@
 <div id='maintext'>
 
 <div class='row'>
-<div class='span9'>
-        
+<div class='col-md-9'>
+     
         <div class="page-header">
           <h1>Patterns</h1>
         </div>
@@ -75,8 +76,17 @@
 <p>
 Here you can find some random grooves and also comping Exercises!! <br>
 
-The grooves are based on syncopated 8th notes rhythm and also on paradidles. Do not 
-forget to ghost the snare drum and mark the accents. <br>
+The random grooves are based on syncopated 8th notes rhythm and paradidles. 
+You can pick the bars that sounds better to you to build your own scores.  Not 
+all the generated rhythm have musical meaning. When playing paradiddles, 
+do not forget to ghost the snare drum and mark the accents. <br><br>
+
+Comping exercises on the other hand should be played with a swing feeling. Play the 
+swing pattern on the ride cymbal while practicing these rhythms. It should help you to 
+improve your swing. See the book <a href="about.html">"The Art of Bop Drumming"</a> to get more details on
+these rhythms. 
+
+
 
 Have fun! 
 </p>
@@ -100,9 +110,11 @@ Have fun!
 
    
     <!-- Modal -->
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+     <div class="modal-content">
     <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="myModalLabel">Generate Rhythms!!</h3>
     </div>
     <div class="modal-body">
@@ -116,36 +128,30 @@ Have fun!
      
     <div class="tab-content">
     <div class="tab-pane active" id="ptns">
-			
-			<div class="menucontent">
-			<form>
-			<div class="control-group">
-			<label class="radio"><input type="radio" name='grvf' class="groov" value="1" checked> Syncopated 8th notes</label>
-			<label class="radio"><input type="radio" name='grvf' class="groov" value="2" > 	Paradidle based exercises</label>
-			</div>
-			</form>			
-			</div>
-
+		<form>
+		<div class="input-group">			
+		<div class="radio"><label><input type="radio" name='grvf' class="groov" value="1" checked> Syncopated 8th notes</label></div>
+		<div class="radio"><label><input type="radio" name='grvf' class="groov" value="2" > 	Paradidle based exercises</label></div>			
+		</div>
+		</form>		
 	</div>
 
     <div class="tab-pane" id="cmping">
     
-	  <div class="menucontent">	
-	  <form>
-	  <div class="control-group">
-	  <label class="radio"><input type="checkbox" class="cmping_vc" value="3" checked> snare</label>
-	  <label class="radio"><input type="checkbox" class="cmping_vc" value="4" > bass drum</label>
-	  <label class="radio"><input type="checkbox" class="cmping_nt" value="2" checked> 8th notes</label>
-	  <label class="radio"><input type="checkbox" class="cmping_nt" value="3" checked> triplets</label>
+	  
+	  <div class="input-group">
+	  <div class="checkbox"><label><input type="checkbox" class="cmping_vc" value="3" checked> snare</label></div>
+	  <div class="checkbox"><label><input type="checkbox" class="cmping_vc" value="4" > bass drum</label></div>
+	  <div class="checkbox"><label><input type="checkbox" class="cmping_nt" value="2" checked> 8th notes</label></div>
+	  <div class="checkbox"><label><input type="checkbox" class="cmping_nt" value="3" checked> triplets</label></div>
 	  </div>
-	  </form>
-	  </div>
-	  <br>
+	  
+	 
 	</div>
   
     <div class="tab-pane" id="settings">
     
-	<div class="well well-small">
+	<div class="well well-sm">
 	Set page width     <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="pg_wdth" type="slider" name="price" value="900" /></span><br><br>
     Set bar numbers <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="bar_nbr" type="slider" name="price" value="10" /></span><br><br>
     Set midi tempo <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="mdi_tmpo" type="slider" name="price" value="100" /></span><br>
@@ -156,7 +162,7 @@ Have fun!
     
     <div class="tab-pane" id="metronome">
     
-	<div class="well well-small">
+	<div class="well well-sm">
 	Set BPM     <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="mtro_bpm" type="slider" name="bpm" value="100" /></span>
 
 	<button class="btn btn-success btn-large" id="metro_btn" onClick = "toggle_metronome();">Start</button>
@@ -173,22 +179,24 @@ Have fun!
    <button class="btn btn-primary"  onClick = "genereta_patterns();">Generate</button>
     </div>
     </div>
-
-
+	</div>
+ </div>
 	
- <div class="navbar navbar-fixed-bottom">
-      <div class="footercontent" >
-	   <a href="#myModal" role="button" class="btn btn-large btn-primary" data-toggle="modal" onClick="$('#myTab a:first').tab('show');">START HERE</a>    
-	   <a href="#myModal" class="btn btn-info btn-large" data-toggle="modal" onClick="$('#myTab a:last').tab('show');"><img  src="img/metronome.png" alt="" width='10' height='10'> Metronome</a>	   	   
-	   <a href="#" class="btn btn-info btn-large" onClick='print_midi("midicontainer");'><i class="icon-white icon-download-alt"></i> Save Files</a>
-	   <a href="#" class="btn btn-info btn-large" onClick='printDiv("notation");'><i  class="icon-white icon-print"></i> Print</a>
+ <nav class="navbar navbar-default navbar-fixed-bottom">
+     <div class="container-fluid">
+		<form class="navbar-form navbar-left">     
+      <div class="btn-group">
+	   <a href="#myModal" role="button" class="btn btn-danger" data-toggle="modal" onClick="$('#myTab a:first').tab('show');"><span class="glyphicon glyphicon-home"></span> START!</a>    
+	   <a href="#myModal" class="btn btn-primary" data-toggle="modal" onClick="$('#myTab a:last').tab('show');"><span class="glyphicon glyphicon-time"></span> Metronome</a>	   	   
+	   <a href="#" class="btn btn-primary" onClick='print_midi("midicontainer");'><span class="glyphicon glyphicon-save"></span> Save Files</a>
+	   <a href="#" class="btn btn-primary" onClick='printDiv("notation");'><span class="glyphicon glyphicon-print"></span> Print</a>
    
 	  
 	   
-	    <div class="btn-group dropup">
-		<button id='play_pop' class="btn btn-info btn-large"><i id='player_icon' class="icon-white icon-play"></i> Play</button>
-		<button class="btn btn-info btn-large dropdown-toggle" data-toggle="dropdown">
-		<i class="icon-white icon-chevron-up"></i>BPM
+	   <div class="btn-group dropup">
+		<button id='play_pop' class="btn btn-primary"><span class="glyphicon glyphicon-play"></span> Play</button>
+		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+		<span class="glyphicon glyphicon-chevron-up"></span> BPM
 		</button>
 		<ul class="dropdown-menu">
 		<!-- SLIDER FOR BPM -->
@@ -197,11 +205,12 @@ Have fun!
 		<br>
 		</ul>
 		</div>
-	   
-	   
+		</div>
+		</form>
+	     
       </div>
     
-</div>
+</nav>
 
 
 
@@ -215,18 +224,22 @@ Have fun!
 	<script src="js/audio.min.js" type="text/javascript"></script>
     <script src="js/rdm_rhythm.min.js" type="text/javascript"></script>
 	<script src="js/jq_plugins.min.js"></script>
-
+	
     
     
     <script>
 	// global variable to trigger the generation function
 	var generate_str='patns_ex';
 	
+	// For the tab menu in modal. The tab id set the type of exercise to generate 
 	$('#myTab a').click(function (e) {
 		e.preventDefault();
 		$(this).tab('show');
 		generate_str=$(this).attr('id');
     });
+
+   /*Plugin to hide navbar when scrolling*/
+	$("#nav-arriba").scrollNav({"bootstrap_mobile": true});
         
     $(function() {
 	/*Render ABC bits in the text*/
@@ -243,8 +256,9 @@ Have fun!
 	
 
 	function genereta_patterns(){
-	
+			// First check the type of patterns to generate (set in the tab menu)
 			if(generate_str === 'patns_ex'){
+				// Check radio button.
 				var options=$('input:radio:checked.groov').map(function () {return this.value;}).get(); 		
 				if(options[0]==='1')
 					render_gr8();
@@ -254,6 +268,8 @@ Have fun!
 			else	
 				render_comping_exercise();
 	}
+
+
 
     </script>
     
