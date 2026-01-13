@@ -1,101 +1,188 @@
-/* Fix for ABCJS chart appearing black/invisible in dark mode */
+/* css/custom.css */
+
+:root {
+    --primary: #1095c1;
+    --primary-hover: #08769b;
+    --paper-bg: #fffbf2; /* Creamy paper */
+    --paper-ink: #1a1a1a;
+    --tile-bg: var(--card-background-color);
+    --tile-border: var(--muted-border-color);
+}
+
+/* --- 1. SHEET MUSIC AREA --- */
 .paper-container {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    position: relative;
+    background-color: var(--paper-bg) !important;
+    color: var(--paper-ink) !important;
+    padding: 30px 10px;
+    border-radius: 4px;
+    border: 1px solid #e0d8c0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Deep shadow for pop */
     overflow-x: auto;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
+    text-align: center;
+    min-height: 180px;
 }
 
 #notation svg {
-    background-color: #ffffff;
-    fill: #000000;
+    background-color: transparent;
+    fill: var(--paper-ink);
+    width: 100%;
 }
 
-/* --- Control Panel Optimization --- */
-.control-panel {
-    border: 2px solid var(--primary);
-    background-color: var(--card-background-color);
-    /* padding: 0.5rem 1rem !important; */
-    /* margin-bottom: 1rem; */
+.paper-watermark {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 0.7rem;
+    color: #dcd6c5;
+    text-transform: uppercase;
+    pointer-events: none;
 }
 
-.control-panel header {
-    padding: 0.25rem 0 !important;
-    margin-bottom: 0.5rem !important;
+/* --- 2. STICKY CONTROL PANEL --- */
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--background-color);
     border-bottom: 1px solid var(--muted-border-color);
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+    /* Glassmorphism attempt for supported browsers */
+    background-color: rgba(var(--background-color-rgb), 0.9);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .control-panel .grid {
-    grid-row-gap: 0.5rem;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+@media (max-width: 768px) {
+    .control-panel .grid { grid-template-columns: 1fr; gap: 1rem; }
+    .sticky-header { padding: 0.5rem 0; position: relative; } /* Unstick on mobile to save screen space */
 }
 
-.control-panel button {
+/* Button grouping */
+.actions-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.play-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+.btn-lg {
+    padding: 0.8rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Slider grouping */
+.sliders-group {
+    background: var(--card-sectionning-background-color);
+    padding: 10px;
+    border-radius: 8px;
+}
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 5px;
-    padding: 0.4rem; 
+}
+.slider-row label { margin-bottom: 0; min-width: 90px; }
+.slider-row input { margin-bottom: 0; }
+.badge {
+    background-color: var(--primary);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8em;
 }
 
-/* --- Accordion & Menu Layout --- */
-details {
-    border-bottom: 1px solid var(--muted-border-color);
-    padding-bottom: 0.5rem;
+/* --- 3. MODERN TILE SELECTORS --- */
+
+.section-title {
+    color: var(--h3-color);
+    border-bottom: 2px solid var(--primary);
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.setting-block {
+    margin-bottom: 1.5rem;
+}
+
+.label-title {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--muted-color);
     margin-bottom: 0.5rem;
 }
 
-details[open] > summary {
-    color: var(--primary);
-    font-weight: bold;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid var(--primary);
-}
-
-/* 
-   Horizontal Layout for inputs, Vertical Layout for Groups 
-*/
-.checkbox-group {
-    /* Flex allows the checkboxes to sit next to each other */
+.tile-grid {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 15px; 
-    
-    /* Spacing between different groups */
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px dashed #e5e5e5;
+    gap: 8px;
 }
 
-/* Remove border from the last group in a container */
-.checkbox-group:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-}
-
-/* The Title Label (First label in the group) */
-.checkbox-group > label:first-of-type {
-    width: 100%; /* Force it to its own line */
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-    font-size: 0.9em;
-    text-transform: uppercase;
-    color: var(--contrast);
-    letter-spacing: 0.5px;
-}
-
-/* The Input Labels */
-.checkbox-group label {
-    width: auto !important; 
-    display: inline-flex;
-    align-items: center;
-    margin-bottom: 0 !important;
+/* The Tile Design */
+.tile {
+    position: relative;
     cursor: pointer;
-    font-size: 0.95em;
+    margin: 0 !important;
 }
 
-label input[type="checkbox"], 
-label input[type="radio"] {
-    margin-right: 6px;
+/* Hide the actual checkbox/radio */
+.tile input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* The visual part of the tile */
+.tile span {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: var(--tile-bg);
+    border: 1px solid var(--tile-border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+}
+
+/* Hover state */
+.tile:hover span {
+    border-color: var(--primary);
+}
+
+/* CHECKED STATE */
+.tile input:checked + span {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 2px 5px rgba(16, 149, 193, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Radio buttons (Time Sigs) get slightly different styling */
+.tile.radio span {
+    border-radius: 20px; /* Pill shape */
+}
+
+/* Metronome Active State */
+.metro-active {
+    background-color: #e53935 !important;
+    border-color: #e53935 !important;
+    color: white !important;
 }
