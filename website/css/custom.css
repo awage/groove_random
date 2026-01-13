@@ -1,0 +1,44 @@
+/* Fix for ABCJS chart appearing black/invisible in dark mode */
+.paper-container {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+#notation svg {
+    background-color: #ffffff;
+    fill: #000000;
+}
+
+/* Control Panel Tweaks */
+.control-panel {
+    border: 2px solid var(--primary);
+    background-color: var(--card-background-color);
+}
+
+.control-panel button {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* Ensure checkboxes align nicely */
+label input[type="checkbox"], 
+label input[type="radio"] {
+    margin-right: 8px;
+}
+
+/* Highlight the summary when details are open to indicate active status */
+details[open] > summary {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+details {
+    border-bottom: 1px solid var(--muted-border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}

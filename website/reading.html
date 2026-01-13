@@ -1,332 +1,168 @@
-    <!DOCTYPE html>
-    <html>
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reading Exercises</title>
-    <!-- Bootstrap -->
-  
-       
-       <link href="css/styles.css" rel="stylesheet">
-        <link href="css/magic-bootstrap.css" rel="stylesheet">      
-       <link href="css/jquery.slider.min.css" rel="stylesheet" type="text/css">
-    </head>
+    <!-- Pico.css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <!-- Custom tweaks -->
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
 
+    <!-- Navigation -->
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>RANDOM GROOVES</strong></li>
+        </ul>
+    </nav>
 
-    <body>
-      
- <div class="container">
-
-    
- <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="nav-arriba">
-    
-     <div class="navbar-header">
-     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#">RANDOM GROOVES</a>
-    </div>
-    <!-- Everything you want hidden at 940px or less, place within here -->
-	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
- 	<ul class="nav navbar-nav">    
-
-       <li><a href="index.html">Home</a></li>
-		<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-		Exercises
-		<b class="caret"></b>
-		</a>
-		<ul class="dropdown-menu">
-		 <li><a tabindex="-1" href='reading.html'><span>Reading</span></a></li>
-		 <li><a tabindex="-1" href='patterns.html'><span>Patterns</span></a></li>
-		 <li><a tabindex="-1" href='sticking.html'><span>Sticking</span></a></li>
-		 <li><a tabindex="-1" href='scales.html'><span>Scale</span></a></li>	
-		</ul>
-		</li>		
-		<li><a href="contact.html">Contact</a></li>
-		<li><a href="about.html">About</a></li>
-		</ul>   		
-	</div>	
-    
-</nav>
-
-           
-<div id="wrap">
-
+    <main class="container">
         
-<div id="maincontent">
-			
-			<div id="musicsheet"><div id="midicontainer" style='display:hide'></div></div>
-			<div id="wavfile"></div>
-			<div id="notation">
-			<div id='maintext'>
-			
-			<div class='row'>
-			<div class='col-md-9'>
-			        
-			        <div class="page-header">
-			          <h1>Reading exercises</h1>
-			        </div>
-			
-			
-			<p>These exercises are intended to develop reading and rhythm habilities. Start slowly. </p>
-			
-			<p>
-			At the bottom of the page you can find the menus to generate the exercises.
-			In the Display Option menu you can choose the number of bars and the width of the sheet. 
-			</p>
-			
-			<p>
-			You can find exercises in simple meters (3/4, 4/4, ...) and in compound meters (6/8, 9/8, ...). 
-			You can choose from several figure over one beat and two beats as for example: 
-			<div class='abc'>
-			%%stretchlast 0<br>
-			X: 1<br>
-			L:1/16 <br>
-			K: clef=perc stafflines=1<br>
-			|:(5:4:5BBBBB (7:4:7BBBBBBB (5:4:5B2B2B2B2B2:|
-			</div>
-			Example of triplets over one and two beats:
-			<div class='abc'>
-			X: 1<br>
-			L:1/8 <br>
-			K: clef=perc stafflines=1<br>
-			%%stretchlast 1<br>
-			|:(3BBB (3:2:3B2B2B2 z2:|
-			</div>
-			</p>
-			
-			<p>
-			If you want more information about the reading of these scores I recommend you the books 
-			of <a href='about.html'>Gary Chaffee</a>. 
-			</p>
-			<br>
-			<br>
-			<br>
-			<br>
-			</div>
-			</div>
-			</div>
-</div>
-</div>
-</div>
-</div>
+        <hgroup>
+            <h1>Reading Exercises</h1>
+            <h2>Develop reading and rhythm skills.</h2>
+        </hgroup>
 
-   
-    <!-- Modal -->
-   <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-     <div class="modal-content">
-    <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3 id="myModalLabel">Generate Rhythms!!</h3>
-    </div>
-    <div class="modal-body">
-	
-	 <ul class="nav nav-tabs" id="myTab">
-    <li class="active"><a href="#home" id='simple'>Simple meters</a></li>
-    <li><a href="#profile" id='compound_meter'>Compound meters</a></li>
-    <li><a href="#settings">Settings</a></li>
-    <li><a href="#metronome">Metronome</a></li>
-    </ul>
-     
-    <div class="tab-content">    
-    <div class="tab-pane active" id="home">
-		
-			<div class="menucontent">				
-			<strong>Subdivisions over one beats</strong><br>
-			<div class="input-group">
-			   <div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="1" checked  />4th</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="2" />8th</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="3"  />16th</label></div>			
-				<div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="4" />triplets</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="5" />5th</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="6" />6th</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="7" />7th</label></div>
-			</div>				
-			</div>			
+        <!-- Notation Display -->
+        <div id="paper" class="paper-container">
+            <div id="notation"></div>
+            <!-- Hidden MIDI container -->
+            <div id="midicontainer" style="display:none;"></div>
+        </div>
 
-			
-			<div class="menucontent">
-			<strong>Subdivisions over two beats</strong> <br>			
-			<div class="input-group">
-					<div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="8" />3:2</label></div>
-					<div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="9" />5:4</label></div>
-					<div class="checkbox-inline"><label><input type="checkbox" class="onebeat" value="10"/>7:4</label></div>				
-			</div>
-			</div>			
-			
-			<div class="menucontent">
-			<strong>Difficulty</strong>
-			<form>		
-			<div class="input-group">
-					<div class="radio-inline"><label><input type="radio" name="dif" class='tdif' value="1" checked >Easy</label></div>
-					<div class="radio-inline"><label><input type="radio" name="dif" class='tdif' value="2" >Hard</label></div>
-					<div class="checkbox-inline"><label><input type="checkbox" class='tdif' value="3" >Dynamics</label></div>
-			</div>
-			</div>
-			</form>
-							
-			<div class="menucontent">
-			<strong>Meters</strong>			  
-					<form>					
-					<div class="input-group">
-					<div class="radio-inline"><label><input type="radio" name="mter" class="meter" value="2/4" />2/4</label></div>
-					<div class="radio-inline"><label><input type="radio" name="mter" class="meter" value="3/4" />3/4</label></div>
-					<div class="radio-inline"><label><input type="radio" name="mter" class="meter" value="4/4" checked />4/4</label></div>					
-					<div class="radio-inline"><label><input type="radio" name="mter" class="meter" value="5/4" />5/4</label></div>
-					<div class="radio-inline"><label><input type="radio" name="mter" class="meter" value="7/4" />7/4</label></div>
-					</div>
-					</form>							
-			</div>	              
+        <!-- MAIN CONTROL PANEL -->
+        <article class="control-panel">
+            <header><strong>Control Panel</strong></header>
+            
+            <div class="grid">
+                <!-- Action Buttons -->
+                <div>
+                    <button id="btn-generate" onclick="app.generateCurrent()">⚡ Generate New</button>
+                    <button id="play_pop" class="contrast" onclick="app.toggleMidi()">▶ Play MIDI</button>
+                    <button id="metro_btn" class="secondary" onclick="app.toggleMetronome()">⏱ Metronome</button>
+                </div>
+                
+                <!-- Sliders -->
+                <div>
+                    <label for="listen_bpm"><small>MIDI BPM: <span id="disp_listen_bpm">100</span></small></label>
+                    <input type="range" id="listen_bpm" min="40" max="200" value="100">
 
+                    <label for="mtro_bpm"><small>Metronome BPM: <span id="disp_mtro_bpm">100</span></small></label>
+                    <input type="range" id="mtro_bpm" min="40" max="250" value="100">
+                </div>
+            </div>
+        </article>
 
+        <hr>
 
-	</div>	
-	
-				
-    
-	<div class="tab-pane" id="profile">
-    
-			<div class="menucontent">
-			<strong>Subdivisions</strong>
-			<div class="input-group">		
-				<div class="checkbox-inline"><label><input type="checkbox" class="cmp_onebeat" value="1" checked />dot 4th</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="cmp_onebeat" value="2" />8th</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="cmp_onebeat" value="3" />16th</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="cmp_onebeat" value="4" />4:6</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="cmp_onebeat" value="5" />5:6</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="cmp_onebeat" value="6" />7:6</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class="cmp_onebeat" value="7" />8:6</label></div>
-			</div>
-			</div>
-			
-			<div class="menucontent">
-			<strong>Difficulty</strong>
-			<form>			
-			<div class="input-group">
-				<div class="radio-inline"><label><input type="radio" name="dif" class='cdif' value="1" checked />Easy</label></div>
-				<div class="radio-inline"><label><input type="radio" name="dif" class='cdif' value="2"/>Hard</label></div>
-				<div class="checkbox-inline"><label><input type="checkbox" class='cdif' value="3"/>Dynamics</label></div>
-			</div>
-			</form>
-			</div>
-	
-			<div class="menucontent">
-			<strong>Meters</strong>
-			<form>
-			<div class="form-group">
-				<div class="radio-inline"><label><input type="radio" name="mter" class="cmeter" value="6/8" checked /> 6/8</label></div>
-				<div class="radio-inline"><label><input type="radio" name="mter" class="cmeter" value="7/8"/>7/8</label></div>
-				<div class="radio-inline"><label><input type="radio" name="mter" class="cmeter" value="9/8"/>9/8</label></div>
-				<div class="radio-inline"><label><input type="radio" name="mter" class="cmeter" value="12/8"/>12/8</label></div>
-			</div>
-			</form>
-			</div>
-	</div>
-
- 
-   <div class="tab-pane" id="settings">
-		<br>		
-		<div class="well well-sm">
-		Set page width     <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="pg_wdth" type="slider" name="price" value="900" /></span><br><br>
-		Set bar numbers <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="bar_nbr" type="slider" name="price" value="10" /></span><br><br>
-		Set midi tempo <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="mdi_tmpo" type="slider" name="price" value="100" /></span><br>
-		</div>	
-   </div>
-    
-	<div class="tab-pane" id="metronome">
-		<br>		
-		<div class="well well-small">
-		Set BPM     <span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="mtro_bpm" type="slider" name="bpm" value="100" /></span>
-		<button class="btn btn-success btn-large" id="metro_btn" onClick = "toggle_metronome();">Start</button>
-		</div>
-   </div>
-   
-   </div>
-   </div>
-    <div class="modal-footer">
-    
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary"  onClick = "render_reading_exercise(generate_str);">Generate</button>
-    </div>
-    </div>
-</div>
-</div>
-
-
-	
-
- <nav class="navbar navbar-default navbar-fixed-bottom">
-     <div class="container-fluid">
-		<form class="navbar-form navbar-left">     
-      <div class="btn-group">
-	   <a href="#myModal" role="button" class="btn btn-danger" data-toggle="modal" onClick="$('#myTab a:first').tab('show');"><span class="glyphicon glyphicon-home"></span> START!</a>    
-	   <a href="#myModal" class="btn btn-primary" data-toggle="modal" onClick="$('#myTab a:last').tab('show');"><span class="glyphicon glyphicon-time"></span> Metronome</a>	   	   
-	   <a href="#" class="btn btn-primary" onClick='print_midi("midicontainer");'><span class="glyphicon glyphicon-save"></span> Save Files</a>
-	   <a href="#" class="btn btn-primary" onClick='printDiv("notation");'><span class="glyphicon glyphicon-print"></span> Print</a>
-   
-	  
-	   
-	   <div class="btn-group dropup">
-		<button id='play_pop' class="btn btn-primary"><span class="glyphicon glyphicon-play"></span> Play</button>
-		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-		<span class="glyphicon glyphicon-chevron-up"></span> BPM
-		</button>
-		<ul class="dropdown-menu">
-		<!-- SLIDER FOR BPM -->
-		<br>
-		<span style="display: inline-block; width: 200px; padding: 0 5px;"><input id="listen_bpm" type="slider" name="bpm" value="100" /></span>
-		<br>
-		</ul>
-		</div>
-		</div>
-		</form>
-	     
-      </div>
-    
-</nav>
-
-
-
-    
-    <audio src="losticks.wav"  id="tickwav" />  
-    <script src="js/jquery.js"></script>
-	 <script src="js/bootstrap.js"></script>
-    <script src="js/abcjs_basic.min.js" type="text/javascript"></script>	
-    <script src="js/audio.min.js" type="text/javascript"></script>
-    <script src="js/rdm_rhythm.min.js" type="text/javascript"></script>
-	 <script src="js/jq_plugins.min.js"></script>
-  
-    
-    <script>
-	// global variable to trigger the generation function
-	var generate_str='simple';
-		
-	$('#myTab a').click(function (e) {
-		e.preventDefault();
-		$(this).tab('show');
-		generate_str=$(this).attr('id');
-    });
-    
-    /*Plugin to hide navbar when scrolling*/
-	$("#nav-arriba").scrollNav({"bootstrap_mobile": true});
+        <!-- SETTINGS ACCORDIONS -->
+        <h3>Generator Settings</h3>
+        <p><small>Open a section to configure parameters. The "Generate New" button applies the settings of the open section.</small></p>
         
-    $(function() {
-	/*Render ABC bits in the text*/
-	$.each($('.abc'),  
-		function(){ 
-			var texto=$(this).text();
-			$(this).text('');
-			$(this).append('<div id="tmp"></div>'); 		
-			ABCJS.renderAbc('tmp', texto, {},  {}, {});
-			$('#tmp').attr('id',''); 	
-		});
-	});
+        <!-- Section: Simple Meters -->
+        <details id="det-simple" open>
+            <summary><strong>Simple Meters</strong> (2/4, 3/4, 4/4...)</summary>
+            <div class="grid">
+                <div>
+                    <label><strong>One Beat Subdivisions</strong></label>
+                    <label><input type="checkbox" class="onebeat" value="1" checked> 4th</label>
+                    <label><input type="checkbox" class="onebeat" value="2"> 8th</label>
+                    <label><input type="checkbox" class="onebeat" value="3"> 16th</label>
+                    <label><input type="checkbox" class="onebeat" value="4"> Triplets</label>
+                    <label><input type="checkbox" class="onebeat" value="5"> 5th</label>
+                    <label><input type="checkbox" class="onebeat" value="6"> 6th</label>
+                    <label><input type="checkbox" class="onebeat" value="7"> 7th</label>
+                </div>
+                <div>
+                    <label><strong>Two Beat Subdivisions</strong></label>
+                    <label><input type="checkbox" class="onebeat" value="8"> 3:2</label>
+                    <label><input type="checkbox" class="onebeat" value="9"> 5:4</label>
+                    <label><input type="checkbox" class="onebeat" value="10"> 7:4</label>
+                </div>
+            </div>
+            <div class="grid">
+                <div>
+                    <label><strong>Meters</strong></label>
+                    <label><input type="radio" name="mter" value="2/4"> 2/4</label>
+                    <label><input type="radio" name="mter" value="3/4"> 3/4</label>
+                    <label><input type="radio" name="mter" value="4/4" checked> 4/4</label>
+                    <label><input type="radio" name="mter" value="5/4"> 5/4</label>
+                    <label><input type="radio" name="mter" value="7/4"> 7/4</label>
+                </div>
+                <div>
+                    <label><strong>Difficulty</strong></label>
+                    <label><input type="radio" name="dif" class="tdif" value="1" checked> Easy</label>
+                    <label><input type="radio" name="dif" class="tdif" value="2"> Hard</label>
+                    <label><input type="checkbox" class="tdif" value="3"> Dynamics</label>
+                </div>
+            </div>
+        </details>
 
-  </script>
+        <!-- Section: Compound Meters -->
+        <details id="det-compound">
+            <summary><strong>Compound Meters</strong> (6/8, 9/8, 12/8...)</summary>
+            <div class="grid">
+                <div>
+                    <label><strong>Subdivisions</strong></label>
+                    <label><input type="checkbox" class="cmp_onebeat" value="1" checked> dot 4th</label>
+                    <label><input type="checkbox" class="cmp_onebeat" value="2"> 8th</label>
+                    <label><input type="checkbox" class="cmp_onebeat" value="3"> 16th</label>
+                    <label><input type="checkbox" class="cmp_onebeat" value="4"> 4:6</label>
+                    <label><input type="checkbox" class="cmp_onebeat" value="5"> 5:6</label>
+                    <label><input type="checkbox" class="cmp_onebeat" value="6"> 7:6</label>
+                    <label><input type="checkbox" class="cmp_onebeat" value="7"> 8:6</label>
+                </div>
+            </div>
+            <div class="grid">
+                <div>
+                    <label><strong>Meters</strong></label>
+                    <label><input type="radio" name="cmeter" value="6/8" checked> 6/8</label>
+                    <label><input type="radio" name="cmeter" value="7/8"> 7/8</label>
+                    <label><input type="radio" name="cmeter" value="9/8"> 9/8</label>
+                    <label><input type="radio" name="cmeter" value="12/8"> 12/8</label>
+                </div>
+                <div>
+                    <label><strong>Difficulty</strong></label>
+                    <label><input type="radio" name="cdif" value="1" checked> Easy</label>
+                    <label><input type="radio" name="cdif" value="2"> Hard</label>
+                    <label><input type="checkbox" class="cdif" value="3"> Dynamics</label>
+                </div>
+            </div>
+        </details>
+
+        <!-- Section: Global Settings -->
+        <details id="det-settings">
+            <summary>Global Configuration</summary>
+            <div class="grid">
+                <div>
+                    <label for="pg_wdth">Page Width (px): <span id="disp_pg_wdth">900</span></label>
+                    <input type="range" id="pg_wdth" min="300" max="1400" value="900">
+                </div>
+                <div>
+                    <label for="bar_nbr">Number of Bars: <span id="disp_bar_nbr">10</span></label>
+                    <input type="range" id="bar_nbr" min="1" max="50" value="10">
+                </div>
+                <div>
+                    <label for="mdi_tmpo">Generated MIDI Tempo: <span id="disp_mdi_tmpo">100</span></label>
+                    <input type="range" id="mdi_tmpo" min="40" max="250" value="100">
+                </div>
+            </div>
+        </details>
+
+    </main>
+
+    <!-- Audio Element for Legacy MIDI Player -->
+    <audio id="tune_wav" src=""></audio>
+
+    <!-- Dependencies -->
+    <script src="js/rdm_rhythm.js"></script> 
+    <script src="js/abcjs_basic.min.js"></script>
+    <script src="js/midi_player.js"></script> 
     
-    
-    </body>
-    </html>
+    <!-- App Logic -->
+    <script src="js/app.js"></script>
+
+</body>
+</html>
