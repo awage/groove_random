@@ -124,22 +124,10 @@ const app = {
         osc.stop(this.audioCtx.currentTime + 0.1); 
     },
 
-    /* --- MIDI Player (Legacy API Adaptation) --- */
+/* --- MIDI Player (Web Audio API) --- */
     
-    PlaySound: function(soundObjId) {
-        var sound = document.getElementById(soundObjId);
-        if (sound){
-            sound.play();       
-        }
-    },
-
-    StopSound: function(soundObjId) {
-        var sound = document.getElementById(soundObjId);
-        if (sound){
-            sound.pause();
-            sound.currentTime = 0;
-        }
-    },
+    // We don't need PlaySound/StopSound for the DOM anymore.
+    // The MIDI logic handles playback internally.
 
     toggleMidi: function() {
         const btn = document.getElementById('play_pop');
@@ -150,7 +138,10 @@ const app = {
                 btn.classList.remove('contrast');
                 btn.classList.add('secondary');
             } else {
-                this.StopSound('tune_wav');
+                // Call the new global stop function from midi_player.js
+                if(typeof stopActiveAudio === 'function') {
+                    stopActiveAudio();
+                }
                 this.play = 0;
                 btn.textContent = "▶ Play MIDI";
                 btn.classList.remove('secondary');
@@ -164,18 +155,26 @@ const app = {
     playMidi: function() {
         try {
             var list_bpm = document.getElementById('listen_bpm').value;
-            // Legacy calls
-            midiFile = MidiFile(this.midiParams.miditrack, list_bpm);     
-            synth = Synth(22100);
+            
+            // New Web Audio Logic
+            // Note: We don't need Synth(rate) manually anymore as midi_player handles context
+            // But we keep the architecture:
+            midiFile = MidiFile(this.midiParams.miditrack, list_bpm);
+            
+            // Re-initialize synth with current context sample rate
+            // Note: Synth is global in midi_player.js, we just ensure it uses correct rate
+            synth = Synth(audioCtx.sampleRate); 
+            
             replayer = Replayer(midiFile, synth);
             AudioPlayer(replayer);
             
-            this.PlaySound('tune_wav');             
             this.play = 1; 
         } catch (e) {
-            console.error("Legacy MIDI Error:", e);
+            console.error("MIDI Playback Error:", e);
+            this.play = 0; // Reset on error
         }
     },
+
 
     /* --- Generation Logic --- */
     
