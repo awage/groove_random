@@ -14,31 +14,88 @@
     fill: #000000;
 }
 
-/* Control Panel Tweaks */
+/* --- Control Panel Optimization --- */
 .control-panel {
     border: 2px solid var(--primary);
     background-color: var(--card-background-color);
+    /* padding: 0.5rem 1rem !important; */
+    /* margin-bottom: 1rem; */
+}
+
+.control-panel header {
+    padding: 0.25rem 0 !important;
+    margin-bottom: 0.5rem !important;
+    border-bottom: 1px solid var(--muted-border-color);
+}
+
+.control-panel .grid {
+    grid-row-gap: 0.5rem;
 }
 
 .control-panel button {
-    margin-bottom: 10px;
-    width: 100%;
+    margin-bottom: 5px;
+    padding: 0.4rem; 
 }
 
-/* Ensure checkboxes align nicely */
-label input[type="checkbox"], 
-label input[type="radio"] {
-    margin-right: 8px;
+/* --- Accordion & Menu Layout --- */
+details {
+    border-bottom: 1px solid var(--muted-border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
-/* Highlight the summary when details are open to indicate active status */
 details[open] > summary {
     color: var(--primary);
     font-weight: bold;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--primary);
 }
 
-details {
-    border-bottom: 1px solid var(--muted-border-color);
-    padding-bottom: 1rem;
+/* 
+   Horizontal Layout for inputs, Vertical Layout for Groups 
+*/
+.checkbox-group {
+    /* Flex allows the checkboxes to sit next to each other */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px; 
+    
+    /* Spacing between different groups */
     margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #e5e5e5;
+}
+
+/* Remove border from the last group in a container */
+.checkbox-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+/* The Title Label (First label in the group) */
+.checkbox-group > label:first-of-type {
+    width: 100%; /* Force it to its own line */
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: var(--contrast);
+    letter-spacing: 0.5px;
+}
+
+/* The Input Labels */
+.checkbox-group label {
+    width: auto !important; 
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0 !important;
+    cursor: pointer;
+    font-size: 0.95em;
+}
+
+label input[type="checkbox"], 
+label input[type="radio"] {
+    margin-right: 6px;
 }

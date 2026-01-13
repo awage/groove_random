@@ -122,7 +122,7 @@ const app = {
         osc.connect(gainNode);
         gainNode.connect(this.audioCtx.destination);
 
-        osc.frequency.value = 1000; // 1000Hz beep
+        osc.frequency.value = 500; // 1000Hz beep
         osc.type = 'sine';
         
         gainNode.gain.value = 0.5; // Volume
