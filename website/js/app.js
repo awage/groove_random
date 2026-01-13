@@ -1,5 +1,3 @@
-
-
 /**
  * Main Application Logic (Vanilla JS)
  */
@@ -27,12 +25,10 @@ const app = {
 
     setupAccordions: function() {
         // Enforce "Accordion" behavior (only one open at a time)
-        // And update the active mode for the main Generate button
         const dets = document.querySelectorAll('details');
         
         dets.forEach(targetDetail => {
             targetDetail.addEventListener("click", (e) => {
-                // Determine ID of clicked section
                 const id = targetDetail.id;
 
                 // Close others
@@ -45,13 +41,14 @@ const app = {
                 // Update State for generator
                 if (id === 'det-simple') this.activeMode = 'simple';
                 else if (id === 'det-compound') this.activeMode = 'compound';
-                // If 'settings' is clicked, we keep the previous activeMode (simple or compound)
             });
         });
     },
 
     setupSliders: function() {
-        const sliders = ['pg_wdth', 'bar_nbr', 'mdi_tmpo', 'mtro_bpm', 'listen_bpm'];
+        // Removed pg_wdth and mdi_tmpo from list
+        const sliders = ['bar_nbr', 'mtro_bpm', 'listen_bpm'];
+        
         sliders.forEach(id => {
             const el = document.getElementById(id);
             const disp = document.getElementById('disp_' + id);
@@ -85,7 +82,6 @@ const app = {
             btn.classList.remove('contrast');
             btn.classList.add('secondary');
         } else {
-            // Init Audio Context on first user interaction
             if (!this.audioCtx) {
                 this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
@@ -100,9 +96,7 @@ const app = {
         const bpm = parseInt(document.getElementById('mtro_bpm').value);
         const ms = 60000 / bpm;
 
-        // Play immediate beep
         this.playBeep();
-
         this.metronomeInterval = setInterval(() => {
             this.playBeep();
         }, ms);
@@ -122,13 +116,12 @@ const app = {
         osc.connect(gainNode);
         gainNode.connect(this.audioCtx.destination);
 
-        osc.frequency.value = 500; // 1000Hz beep
+        osc.frequency.value = 1000; 
         osc.type = 'sine';
-        
-        gainNode.gain.value = 0.5; // Volume
+        gainNode.gain.value = 0.5; 
 
         osc.start();
-        osc.stop(this.audioCtx.currentTime + 0.1); // Short beep (100ms)
+        osc.stop(this.audioCtx.currentTime + 0.1); 
     },
 
     /* --- MIDI Player (Legacy API Adaptation) --- */
@@ -187,7 +180,6 @@ const app = {
     /* --- Generation Logic --- */
     
     generateCurrent: function() {
-        // Detect which accordion is open
         const simpleOpen = document.getElementById('det-simple').hasAttribute('open');
         const compoundOpen = document.getElementById('det-compound').hasAttribute('open');
 
@@ -196,20 +188,24 @@ const app = {
         } else if (compoundOpen) {
             this.generate('compound');
         } else {
-            // If user is in "Global Settings", use the last active mode
             this.generate(this.activeMode);
         }
     },
 
     generate: function(mode) {
-        // 1. Update Global Params
-        const width = parseInt(document.getElementById('pg_wdth').value);
+        // 1. Calculate Dynamic Width
+        const paperElement = document.getElementById('paper');
+        // Get the width of the container, subtract padding (approx 40px)
+        const containerWidth = paperElement.clientWidth - 190;
+        
+        this.renderParams.width = containerWidth;
+        this.printerParams.staffwidth = containerWidth;
+        
+        // 2. Get Params
         const bars = parseInt(document.getElementById('bar_nbr').value);
-        const tempo = parseInt(document.getElementById('mdi_tmpo').value);
+        // Use the main playback slider for generation tempo as well
+        const tempo = parseInt(document.getElementById('listen_bpm').value);
 
-        const maxWidth = document.body.clientWidth;
-        this.renderParams.width = (width > maxWidth) ? maxWidth - 40 : width;
-        this.printerParams.staffwidth = this.renderParams.width;
         this.barsNumber = bars;
         this.midiParams.qpm = tempo;
 
