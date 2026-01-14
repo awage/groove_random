@@ -1,11 +1,12 @@
 /**
- * Main Application Logic (Refactored for Multi-page)
+ * Main Application Logic
+ * Supports: Simple, Compound, Sticking, Coordination
  */
 
 const app = {
     // State
     play: 0,
-    pageMode: null, // 'simple' or 'compound'
+    pageMode: null, // 'simple', 'compound', 'sticking'
     metronomeInterval: null,
     audioCtx: null, 
     
@@ -20,18 +21,16 @@ const app = {
         const body = document.body;
         this.pageMode = body.getAttribute('data-mode');
 
-        // If no mode (e.g., landing page), stop here
+        // If no mode (landing page), stop here
         if (!this.pageMode) return;
 
         this.setupSliders();
-        // No more accordions setup needed
         
         // Initial Generation
         this.generateCurrent();
 
         // Handle Window Resize to redraw paper
         window.addEventListener('resize', () => {
-             // Debounce could be added here
              this.generateCurrent();
         });
     },
@@ -62,6 +61,23 @@ const app = {
         });
     },
 
+    /* --- UI Toggles for Sticking Page --- */
+    toggleStickingMode: function() {
+        const mode = document.querySelector('input[name="sticking_type"]:checked').value;
+        const panelAccent = document.getElementById('panel-accent');
+        const panelCoord = document.getElementById('panel-coord');
+
+        if(mode === 'accent') {
+            panelAccent.style.display = 'block';
+            panelCoord.style.display = 'none';
+        } else {
+            panelAccent.style.display = 'none';
+            panelCoord.style.display = 'block';
+        }
+        // Auto regenerate when switching tabs
+        this.generateCurrent();
+    },
+
     /* --- Metronome Logic --- */
     toggleMetronome: function() {
         const btn = document.getElementById('metro_btn');
@@ -86,14 +102,10 @@ const app = {
     startMetronome: function() {
         const el = document.getElementById('mtro_bpm');
         if(!el) return;
-        
         const bpm = parseInt(el.value);
         const ms = 60000 / bpm;
-
         this.playBeep();
-        this.metronomeInterval = setInterval(() => {
-            this.playBeep();
-        }, ms);
+        this.metronomeInterval = setInterval(() => { this.playBeep(); }, ms);
     },
 
     stopMetronome: function() {
@@ -146,7 +158,6 @@ const app = {
     playMidi: function() {
         try {
             var list_bpm = document.getElementById('listen_bpm').value;
-            // midi_player.js globals:
             midiFile = MidiFile(this.midiParams.miditrack, list_bpm);
             synth = Synth(audioCtx.sampleRate); 
             replayer = Replayer(midiFile, synth);
@@ -161,93 +172,115 @@ const app = {
     /* --- Generation Logic --- */
     
     generateCurrent: function() {
-        // Wrapper to call the specific generation based on Page Mode
-        if (this.pageMode === 'simple') {
-            this.generate('simple');
-        } else if (this.pageMode === 'compound') {
-            this.generate('compound');
-        }
-    },
-
-    generate: function(mode) {
-        // 1. Calculate Dynamic Width based on the paper container
         const paperElement = document.getElementById('paper');
         if(!paperElement) return;
 
-        // Approx padding adjustment
-        const containerWidth = paperElement.clientWidth - 60; 
-        
+        // Dynamic Width
+        const containerWidth = paperElement.clientWidth - 120; 
         this.renderParams.width = containerWidth;
         this.printerParams.staffwidth = containerWidth;
         
-        // 2. Get Params
-        // Note: 'bar_nbr' might not exist on simple pages if not added, but we added it in HTML
+        // Global Params
         const barEl = document.getElementById('bar_nbr');
         const tempoEl = document.getElementById('listen_bpm');
-        
-        const bars = barEl ? parseInt(barEl.value) : 10;
-        const tempo = tempoEl ? parseInt(tempoEl.value) : 100;
+        this.barsNumber = barEl ? parseInt(barEl.value) : 10;
+        this.midiParams.qpm = tempoEl ? parseInt(tempoEl.value) : 100;
 
-        this.barsNumber = bars;
-        this.midiParams.qpm = tempo;
-
-        let staff = "";
-        let midistaff = "";
-        let preamble = "X:1\nT: Reading Exercise\nM:";
-        let postamble = "\nL:1/16\nK:clef=perc stafflines=1\n%%barsperstaff 4\n";
-        let midiPreambleBase = "X:1\nT:Midi\nM:";
-
-        // --- SIMPLE GENERATION ---
-        if (mode === 'simple') {
-            const meterIn = document.querySelector('input[name="mter"]:checked').value;
-            const options = Array.from(document.querySelectorAll('input.onebeat:checked')).map(cb => cb.value);
-            
-            let diff = [document.querySelector('input[name="dif"]:checked').value];
-            const dyn = document.querySelector('input[type="checkbox"].tdif:checked');
-            if(dyn) diff.push(dyn.value);
-
-            preamble += meterIn + postamble;
-            
-            // Calls external rdm_rhythm.js function
-            staff = generate_reading_exercise(options, diff, meterIn, 'simple', (this.renderParams.width/1280), this.barsNumber);
-            
-            const midiPreamble = midiPreambleBase + meterIn + "\nL:1/16\nK:clef=perc\n[V:v1] |";
-            midistaff = this.composeMidiStaff(staff, midiPreamble, meterIn, 'simple');
-
-        } 
-        // --- COMPOUND GENERATION ---
-        else if (mode === 'compound') {
-            const meterIn = document.querySelector('input[name="cmeter"]:checked').value;
-            const options = Array.from(document.querySelectorAll('input.cmp_onebeat:checked')).map(cb => cb.value);
-            
-            let diff = [document.querySelector('input[name="cdif"]:checked').value];
-            const dyn = document.querySelector('input[type="checkbox"].cdif:checked');
-            if(dyn) diff.push(dyn.value);
-
-            if (meterIn === '7/8') {
-                preamble += meterIn + postamble;
-                staff = generate_reading_exercise_78(options, diff, (this.renderParams.width/1280), this.barsNumber);
-            } else {
-                preamble += meterIn + postamble;
-                staff = generate_reading_exercise(options, diff, meterIn, 'compound', (this.renderParams.width/1280), this.barsNumber);
-            }
-
-            const midiPreamble = midiPreambleBase + meterIn + "\nL:1/16\nK:clef=perc\n[V:v1] |";
-            midistaff = this.composeMidiStaff(staff, midiPreamble, meterIn, 'compound');
-        }
-
-        // Render Visuals
-        const finalAbc = preamble + staff;
-        ABCJS.renderAbc('notation', finalAbc, {}, this.printerParams, this.renderParams);
-
-        // Store MIDI string
-        this.midiParams.miditrack = midistaff;
-
-        // Render Audio/MIDI hidden container
-        ABCJS.renderMidi('midicontainer', midistaff, {}, this.midiParams, {});
+        // Dispatch based on mode
+        if (this.pageMode === 'simple') this.generateSimple();
+        else if (this.pageMode === 'compound') this.generateCompound();
+        else if (this.pageMode === 'sticking') this.generateSticking();
     },
 
+    generateSimple: function() {
+        const meterIn = document.querySelector('input[name="mter"]:checked').value;
+        const options = Array.from(document.querySelectorAll('input.onebeat:checked')).map(cb => cb.value);
+        
+        let diff = [document.querySelector('input[name="dif"]:checked').value];
+        const dyn = document.querySelector('input[type="checkbox"].tdif:checked');
+        if(dyn) diff.push(dyn.value);
+
+        let preamble = "X:1\nT: Reading Exercise\nM:" + meterIn + "\nL:1/16\nK:clef=perc stafflines=1\n%%barsperstaff 4\n";
+        let staff = generate_reading_exercise(options, diff, meterIn, 'simple', (this.renderParams.width/1280), this.barsNumber);
+        
+        const midiPreamble = "X:1\nT:Midi\nM:" + meterIn + "\nL:1/16\nK:clef=perc\n[V:v1] |";
+        let midistaff = this.composeMidiStaff(staff, midiPreamble, meterIn, 'simple');
+
+        this.render(preamble + staff, midistaff);
+    },
+
+    generateCompound: function() {
+        const meterIn = document.querySelector('input[name="cmeter"]:checked').value;
+        const options = Array.from(document.querySelectorAll('input.cmp_onebeat:checked')).map(cb => cb.value);
+        
+        let diff = [document.querySelector('input[name="cdif"]:checked').value];
+        const dyn = document.querySelector('input[type="checkbox"].cdif:checked');
+        if(dyn) diff.push(dyn.value);
+
+        let preamble = "X:1\nT: Reading Exercise\nM:" + meterIn + "\nL:1/16\nK:clef=perc stafflines=1\n%%barsperstaff 4\n";
+        let staff = "";
+
+        if (meterIn === '7/8') {
+            staff = generate_reading_exercise_78(options, diff, (this.renderParams.width/1280), this.barsNumber);
+        } else {
+            staff = generate_reading_exercise(options, diff, meterIn, 'compound', (this.renderParams.width/1280), this.barsNumber);
+        }
+
+        const midiPreamble = "X:1\nT:Midi\nM:" + meterIn + "\nL:1/16\nK:clef=perc\n[V:v1] |";
+        let midistaff = this.composeMidiStaff(staff, midiPreamble, meterIn, 'compound');
+
+        this.render(preamble + staff, midistaff);
+    },
+
+    generateSticking: function() {
+        const subMode = document.querySelector('input[name="sticking_type"]:checked').value;
+
+        if (subMode === 'accent') {
+            // ACCENT MODE
+            const options = Array.from(document.querySelectorAll('input.sticking_opt:checked')).map(cb => cb.value);
+            // Assuming generate_accent_exercise exists in rdm_rhythm.js based on old HTML
+            // Adapting parameters to match standard ABCJS needs
+            
+            // Note: If generate_accent_exercise renders internally, we need to capture it or
+            // ensure it returns a string. Assuming it returns string like others:
+            let staff = generate_accent_exercise(options,  this.barsNumber);
+            
+            let preamble = "X:1\nT: Accent Exercise\nM:4/4\nL:1/16\nK:clef=perc stafflines=1\n";
+            let midistaff = this.composeMidiStaff(staff, "X:1\nM:4/4\nL:1/16\nK:clef=perc\n[V:v1] |", "4/4", 'simple');
+            
+            this.render(preamble + staff, midistaff);
+
+        } else {
+            // COORDINATION MODE
+            const md = document.querySelector('input[name="md"]:checked').value;
+            const mi = document.querySelector('input[name="mi"]:checked').value;
+            
+            // Assuming generate_coordination_exercise returns ABC string
+            let staff = generate_coordination_exercise(md, mi, this.barsNumber);
+            
+            let preamble = "X:1\nT: Coordination\nM:4/4\nL:1/16\nK:clef=perc stafflines=1\n";
+            
+            // Special MIDI handling for Coordination (2 voices usually)
+            // If the generator returns V:1 and V:2 in the staff string, we just prepend header
+            let midiPreamble = "X:1\nT:Midi\nM:4/4\nL:1/16\nK:clef=perc\n";
+            
+            // For coordination, we don't usually need the metronome track overlay 
+            // because it's polyphonic enough, but let's see. 
+            // Simplest way: Pass the staff directly if it contains voice data.
+            this.render(preamble + staff, midiPreamble + staff);
+        }
+    },
+
+    /* --- Helper: Render to Screen --- */
+    render: function(visualAbc, midiAbc) {
+        ABCJS.renderAbc('notation', visualAbc, {}, this.printerParams, this.renderParams);
+        this.midiParams.miditrack = midiAbc;
+        ABCJS.renderMidi('midicontainer', midiAbc, {}, this.midiParams, {});
+    },
+
+    /* --- Helper: Compose MIDI (Add Metronome Track) --- */
     composeMidiStaff: function(staff, preamble, meter, type) {
+        // Calculate beat structure for the metronome click (V2)
         let loopMeter = 0;
         if (meter === '7/8') {
             loopMeter = 7;
@@ -257,23 +290,26 @@ const app = {
             if (parts[1] !== '4') loopMeter = loopMeter / 3;
         }
 
-        let midistr = '';
+        let clickTrack = '';
         const totalBeats = this.barsNumber * loopMeter;
 
         for (let i = 0; i < totalBeats; i++) {
-            if (i % loopMeter === 0 && i !== (totalBeats - 1) && i !== 0) midistr += "|";
-            if (type === 'simple') midistr += "e4";
-            else if (meter === '7/8') midistr += "e2";
-            else midistr += "e6";
+            if (i % loopMeter === 0 && i !== (totalBeats - 1) && i !== 0) clickTrack += "|";
+            if (type === 'simple') clickTrack += "e4";
+            else if (meter === '7/8') clickTrack += "e2";
+            else clickTrack += "e6";
         }
 
-        let result = staff.replace(/\n/g, '');
-        result = result.replace(/B/g, 'D,,');
-        result = result.replace(/c/g, 'D,,');
-        result = result.replace(/F/g, 'C,,');
-        result = result.replace(/g/g, '^F,,');
+        // Clean up staff for MIDI (map notes to drum sounds if needed)
+        // Adjust mappings based on your preferred sounds
+        let cleanStaff = staff.replace(/\n/g, '');
+        // Example mappings found in previous code:
+        cleanStaff = cleanStaff.replace(/B/g, 'D,,'); // Kick?
+        cleanStaff = cleanStaff.replace(/c/g, 'D,,');
+        cleanStaff = cleanStaff.replace(/F/g, 'C,,');
+        cleanStaff = cleanStaff.replace(/g/g, '^F,,'); // Hihat?
 
-        return preamble + result + "\n[V:v2] |" + midistr + "|]\n";
+        return preamble + cleanStaff + "\n[V:v2] |" + clickTrack + "|]\n";
     }
 };
 

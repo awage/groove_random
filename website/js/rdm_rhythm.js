@@ -639,7 +639,7 @@ function print_partitura_gr8(array, num, str){
 }
 
 
-function generate_accent_exercise(ex_type, bar_numbers){
+function generate_accent_exercise(ex_type, bars_number){
 
     var i;
     var rnum;
@@ -761,7 +761,7 @@ function print_accent_score(ex_type, level){
 }
 
 
-function generate_coordination_exercise(options, bar_numbers){
+function generate_coordination_exercise(md, mi, bars_number){
 
     
 var meter=4;
@@ -769,15 +769,15 @@ var tmpstr='';
 
 meter=4; 
 level=1;
-bar_numbers=1;
+// bars_number=1;
 // MANO DERECHA
 manodcha="[V:v1]"
 
-manodcha=manodcha.concat(print_coordination_score(options[0], level),"||\n ");
+manodcha=manodcha.concat(print_coordination_score(md, level),"||\n ");
 manodcha = manodcha.replace(/c/g, 'd');
 // MANO IZQUIERDA
 manoizq="[V:v2]"
-manoizq=manoizq.concat(print_coordination_score(options[1], level),"||\n ");
+manoizq=manoizq.concat(print_coordination_score(mi, level),"||\n ");
 manoizq = manoizq.replace(/c/g, 'F');
 
 	tmpstr=tmpstr.concat(manodcha,manoizq);
@@ -832,7 +832,7 @@ var meter=4;
 
 meter=4; 
 level=1;
-bar_numbers=1;
+// bars_number=1;
 
 subdiv=8;
 
