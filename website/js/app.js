@@ -587,7 +587,7 @@ const app = {
             if (grooveType === '1') {
                 staff=generate_pattern_markov_8(this.barsNumber);
             } else {
-                staff = generate_patterns_paradidles(this.barsNumber);
+                staff = generate_pattern_paradidles(this.barsNumber);
             }
 
             // let preamble = "X:1\nT: Groove Pattern\nM:4/4\nL:1/16\nK:clef=perc stafflines=1\n";
