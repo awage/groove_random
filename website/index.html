@@ -1,111 +1,46 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Welcome to Random Grooves</title>
-		<!-- Bootstrap -->
-		<link href="css/magic-bootstrap.css" rel="stylesheet">
-		<link href="css/styles.css" rel="stylesheet">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Drum Reading Exercises</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    <main class="container landing-container">
+        <h1 class="text-center">🥁 Rhythm Trainer</h1>
+        <p class="text-center">Select an exercise mode to begin reading practice.</p>
+        
+        <div class="grid landing-grid">
+            <!-- Simple Meters Card -->
+            <a href="simple.html" class="card-link">
+                <article class="mode-card">
+                    <header>Simple Meters</header>
+                    <div class="huge-icon">4/4</div>
+                    <footer>
+                        <small>2/4, 3/4, 4/4, 5/4, 7/4</small><br>
+                        <strong>Start Practice →</strong>
+                    </footer>
+                </article>
+            </a>
 
-	</head>
-	<body>
-
-		<!--img  src="img/logo.png" alt="" width='900' height='74'-->
-		<!-- img src="img/logo.svg" width="960" -->
-
-		<div class='container'>
-			<div class='row'>
-			<div class='col-xs-10 col-sm-8 col-md-8'>
-
-					<div class="page-header">
-						<h1>Welcome to GROOVE RANDOM! </h1>
-
-					</div>
-
-			</div>
-			</div>
-
-			<div class='row'>
-				<div class='col-xs-5 col-md-2'>
-				
-					<div class="indexcontent"> 						
-						<a href="reading.html"><img src="img/march_drum.svg" alt="" width='156' ></a>						
-					</div>
-					<div class='text_box'> Reading			</div>
-					
-					<!-- div style="position:absolute; top:76px; left:45px; font-size: 200%;" >Patterns</div !-->
-					
-				</div>
-
-				<div class='col-xs-5 col-md-2'>
-					<div class="indexcontent"><a href="patterns.html"><img  src="img/cymbal.svg" alt="" width='156'  ></a>
-					</div>
-					<div class='text_box'>		Comping		</div>
-				</div>
-
-				<div class='col-xs-5 col-md-2'>
-					<div class="indexcontent"><a href="sticking.html"><img  src="img/chart.svg" alt="" width='156' ></a></div>
-					<div class='text_box'>		Sticking	</div>
-				</div>
-
-				<div class='col-xs-5 col-md-2'>
-					<div class="indexcontent"><a href="scales.html"><img  src="img/metronome.svg" alt="" width='156'  ></a>
-					</div>
-					<div class='text_box'>		Scales	</div>
-				</div>
-
-			</div>
-		</div>
-		
-		<div class='container'>
-			<div class='row'>
-
-				<div class='col-xs-10 col-sm-8 col-md-8'>
-
-					
-
-					<p>
-						This web page is an educational ressource for drummers and percussionist in search for challenging
-						exercises to improve their rhythm and their skills.
-					</p>
-					<p>
-						There are plenty of differents exercises, you can also play the tune, download the corresponding midi file and print or save the sheet.
-					</p>
-					You will find the following kind of exercises:
-					<ul>
-						<li>
-							<a href='reading.html' >Reading at first sight</a> with a large variety of figures and meters
-						</li>
-						<li>
-							<a href='patterns.html' >Random comping and groove exercises</a> to practice on a drum kit.
-						</li>
-						<li>
-							<a href='sticking.html'>Sticking exercises</a> to improve your technique.
-						</li>
-						<li>
-							<a href='scales.html'>Rhythm scales</a> to practice polyrhythm habilities.
-						</li>
-					</ul>
-					<br>
-					<br>
-					You will find a bar menu at the bottom of the page. In this menu you can generate the exercises and also change the
-					display properties to adapt the sheet to your screen. You will also find three icons which are pretty self-explaining
-					to listen to the tune, print the score and save the audio files.
-
-					<br>
-					<br>
-					The audio support is experimental. It will work only for cutting edge html5 browsers.
-					Most of the other features work with a javascript capable internet browser.
-					<br>
-					<br>
-					This is a beta version of the web site. Also if you find bugs or problems with the page please <a href='contact.html'>send me a mail</a>. All the material is a
-					under the license GPLv3 and the source can be downloaded <a href='https://github.com/awage/groove_random'>here</a>.
-				</div>
-			</div>
-
-		</div>
-
-		<script src="js/jquery.js"></script>
-		<script src="js/bootstrap.js"></script>
-
-	</body>
+            <!-- Compound Meters Card -->
+            <a href="compound.html" class="card-link">
+                <article class="mode-card">
+                    <header>Compound Meters</header>
+                    <div class="huge-icon">6/8</div>
+                    <footer>
+                        <small>6/8, 9/8, 12/8</small><br>
+                        <strong>Start Practice →</strong>
+                    </footer>
+                </article>
+            </a>
+        </div>
+        
+        <footer class="text-center mt-4">
+            <small>v2.2 Redesign</small>
+        </footer>
+    </main>
+</body>
 </html>

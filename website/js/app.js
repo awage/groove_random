@@ -1,13 +1,13 @@
 /**
- * Main Application Logic (Vanilla JS)
+ * Main Application Logic (Refactored for Multi-page)
  */
 
 const app = {
-    // State matching legacy variables
+    // State
     play: 0,
-    activeMode: 'simple', // Tracks which generator logic to use
+    pageMode: null, // 'simple' or 'compound'
     metronomeInterval: null,
-    audioCtx: null, // For JS Metronome
+    audioCtx: null, 
     
     // Config
     renderParams: { width: 900 },
@@ -16,37 +16,27 @@ const app = {
     barsNumber: 10,
 
     init: function() {
+        // Detect Page Mode from Body Tag
+        const body = document.body;
+        this.pageMode = body.getAttribute('data-mode');
+
+        // If no mode (e.g., landing page), stop here
+        if (!this.pageMode) return;
+
         this.setupSliders();
-        this.setupAccordions();
+        // No more accordions setup needed
         
         // Initial Generation
-        this.generate('simple');
-    },
+        this.generateCurrent();
 
-    setupAccordions: function() {
-        // Enforce "Accordion" behavior (only one open at a time)
-        const dets = document.querySelectorAll('details');
-        
-        dets.forEach(targetDetail => {
-            targetDetail.addEventListener("click", (e) => {
-                const id = targetDetail.id;
-
-                // Close others
-                dets.forEach(detail => {
-                    if (detail !== targetDetail) {
-                        detail.removeAttribute("open");
-                    }
-                });
-                
-                // Update State for generator
-                if (id === 'det-simple') this.activeMode = 'simple';
-                else if (id === 'det-compound') this.activeMode = 'compound';
-            });
+        // Handle Window Resize to redraw paper
+        window.addEventListener('resize', () => {
+             // Debounce could be added here
+             this.generateCurrent();
         });
     },
 
     setupSliders: function() {
-        // Removed pg_wdth and mdi_tmpo from list
         const sliders = ['bar_nbr', 'mtro_bpm', 'listen_bpm'];
         
         sliders.forEach(id => {
@@ -62,10 +52,9 @@ const app = {
                         this.startMetronome();
                     }
                     
-                    // Legacy behavior: if slider moves while playing, restart midi
+                    // If Tempo changes while playing MIDI, restart
                     if(id === 'listen_bpm' && this.play === 1) {
-                        this.StopSound('tune_wav');
-                        this.play = 0;
+                        this.StopMidiClean();
                         this.playMidi(); 
                     }
                 });
@@ -73,12 +62,14 @@ const app = {
         });
     },
 
-    /* --- Metronome Logic (Vanilla JS Audio API) --- */
+    /* --- Metronome Logic --- */
     toggleMetronome: function() {
         const btn = document.getElementById('metro_btn');
+        if(!btn) return;
+
         if (this.metronomeInterval) {
             this.stopMetronome();
-            btn.textContent = "⏱ Metronome";
+            btn.textContent = "⏱ Metro";
             btn.classList.remove('contrast');
             btn.classList.add('secondary');
         } else {
@@ -86,14 +77,17 @@ const app = {
                 this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
             this.startMetronome();
-            btn.textContent = "⏹ Stop Metronome";
+            btn.textContent = "⏹ Stop";
             btn.classList.remove('secondary');
             btn.classList.add('contrast');
         }
     },
 
     startMetronome: function() {
-        const bpm = parseInt(document.getElementById('mtro_bpm').value);
+        const el = document.getElementById('mtro_bpm');
+        if(!el) return;
+        
+        const bpm = parseInt(el.value);
         const ms = 60000 / bpm;
 
         this.playBeep();
@@ -109,41 +103,31 @@ const app = {
 
     playBeep: function() {
         if (!this.audioCtx) return;
-        
         const osc = this.audioCtx.createOscillator();
         const gainNode = this.audioCtx.createGain();
-
         osc.connect(gainNode);
         gainNode.connect(this.audioCtx.destination);
-
         osc.frequency.value = 1000; 
         osc.type = 'sine';
         gainNode.gain.value = 0.5; 
-
         osc.start();
         osc.stop(this.audioCtx.currentTime + 0.1); 
     },
 
-/* --- MIDI Player (Web Audio API) --- */
-    
-    // We don't need PlaySound/StopSound for the DOM anymore.
-    // The MIDI logic handles playback internally.
-
+    /* --- MIDI Player --- */
     toggleMidi: function() {
         const btn = document.getElementById('play_pop');
+        if(!btn) return;
+
         if(this.midiParams.miditrack){
             if(this.play === 0){
                 this.playMidi();
-                btn.textContent = "⏹ Stop MIDI";
+                btn.textContent = "⏹ Stop";
                 btn.classList.remove('contrast');
                 btn.classList.add('secondary');
             } else {
-                // Call the new global stop function from midi_player.js
-                if(typeof stopActiveAudio === 'function') {
-                    stopActiveAudio();
-                }
-                this.play = 0;
-                btn.textContent = "▶ Play MIDI";
+                this.StopMidiClean();
+                btn.textContent = "▶ Listen";
                 btn.classList.remove('secondary');
                 btn.classList.add('contrast');
             }
@@ -152,58 +136,57 @@ const app = {
         }
     },
 
+    StopMidiClean: function() {
+        if(typeof stopActiveAudio === 'function') {
+            stopActiveAudio();
+        }
+        this.play = 0;
+    },
+
     playMidi: function() {
         try {
             var list_bpm = document.getElementById('listen_bpm').value;
-            
-            // New Web Audio Logic
-            // Note: We don't need Synth(rate) manually anymore as midi_player handles context
-            // But we keep the architecture:
+            // midi_player.js globals:
             midiFile = MidiFile(this.midiParams.miditrack, list_bpm);
-            
-            // Re-initialize synth with current context sample rate
-            // Note: Synth is global in midi_player.js, we just ensure it uses correct rate
             synth = Synth(audioCtx.sampleRate); 
-            
             replayer = Replayer(midiFile, synth);
             AudioPlayer(replayer);
-            
             this.play = 1; 
         } catch (e) {
             console.error("MIDI Playback Error:", e);
-            this.play = 0; // Reset on error
+            this.play = 0; 
         }
     },
-
 
     /* --- Generation Logic --- */
     
     generateCurrent: function() {
-        const simpleOpen = document.getElementById('det-simple').hasAttribute('open');
-        const compoundOpen = document.getElementById('det-compound').hasAttribute('open');
-
-        if (simpleOpen) {
+        // Wrapper to call the specific generation based on Page Mode
+        if (this.pageMode === 'simple') {
             this.generate('simple');
-        } else if (compoundOpen) {
+        } else if (this.pageMode === 'compound') {
             this.generate('compound');
-        } else {
-            this.generate(this.activeMode);
         }
     },
 
     generate: function(mode) {
-        // 1. Calculate Dynamic Width
+        // 1. Calculate Dynamic Width based on the paper container
         const paperElement = document.getElementById('paper');
-        // Get the width of the container, subtract padding (approx 40px)
-        const containerWidth = paperElement.clientWidth - 190;
+        if(!paperElement) return;
+
+        // Approx padding adjustment
+        const containerWidth = paperElement.clientWidth - 60; 
         
         this.renderParams.width = containerWidth;
         this.printerParams.staffwidth = containerWidth;
         
         // 2. Get Params
-        const bars = parseInt(document.getElementById('bar_nbr').value);
-        // Use the main playback slider for generation tempo as well
-        const tempo = parseInt(document.getElementById('listen_bpm').value);
+        // Note: 'bar_nbr' might not exist on simple pages if not added, but we added it in HTML
+        const barEl = document.getElementById('bar_nbr');
+        const tempoEl = document.getElementById('listen_bpm');
+        
+        const bars = barEl ? parseInt(barEl.value) : 10;
+        const tempo = tempoEl ? parseInt(tempoEl.value) : 100;
 
         this.barsNumber = bars;
         this.midiParams.qpm = tempo;
@@ -214,23 +197,28 @@ const app = {
         let postamble = "\nL:1/16\nK:clef=perc stafflines=1\n%%barsperstaff 4\n";
         let midiPreambleBase = "X:1\nT:Midi\nM:";
 
+        // --- SIMPLE GENERATION ---
         if (mode === 'simple') {
             const meterIn = document.querySelector('input[name="mter"]:checked').value;
-            const options = Array.from(document.querySelectorAll('#det-simple input.onebeat:checked')).map(cb => cb.value);
+            const options = Array.from(document.querySelectorAll('input.onebeat:checked')).map(cb => cb.value);
             
             let diff = [document.querySelector('input[name="dif"]:checked').value];
             const dyn = document.querySelector('input[type="checkbox"].tdif:checked');
             if(dyn) diff.push(dyn.value);
 
             preamble += meterIn + postamble;
+            
+            // Calls external rdm_rhythm.js function
             staff = generate_reading_exercise(options, diff, meterIn, 'simple', (this.renderParams.width/1280), this.barsNumber);
             
             const midiPreamble = midiPreambleBase + meterIn + "\nL:1/16\nK:clef=perc\n[V:v1] |";
             midistaff = this.composeMidiStaff(staff, midiPreamble, meterIn, 'simple');
 
-        } else if (mode === 'compound') {
+        } 
+        // --- COMPOUND GENERATION ---
+        else if (mode === 'compound') {
             const meterIn = document.querySelector('input[name="cmeter"]:checked').value;
-            const options = Array.from(document.querySelectorAll('#det-compound input.cmp_onebeat:checked')).map(cb => cb.value);
+            const options = Array.from(document.querySelectorAll('input.cmp_onebeat:checked')).map(cb => cb.value);
             
             let diff = [document.querySelector('input[name="cdif"]:checked').value];
             const dyn = document.querySelector('input[type="checkbox"].cdif:checked');
@@ -292,4 +280,3 @@ const app = {
 document.addEventListener('DOMContentLoaded', () => {
     app.init();
 });
-
