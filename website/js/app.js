@@ -271,8 +271,9 @@ const app = {
             let midiPreamble = "X:1\nT:Midi\nM:4/4\nL:1/16\nK:clef=perc\n";
             let preamble="X:1\nT: Random groove\nM: 4/4\nL: 1/16\nK: clef=perc\n%%stretchlast 0\n|";
             // let midiPreamble= "X:1\nM: 4/4\nL:1/16\nK:clef=perc\n[V:v1] |"; 
-            
-            this.render(preamble + staff, midiPreamble + staff);
+            let midistaff = this.composeMidiStaff(staff, midiPreamble, "4/4", 'simple');
+          
+            this.render(preamble + staff,  midistaff);
 
         } else {
             // Comping
@@ -283,8 +284,9 @@ const app = {
             
             let preamble = "X:1\nT: Jazz Comping\nM:4/4\nL:1/16\nK:clef=perc stafflines=1\n";
             let midiPreamble = "X:1\nT:Midi\nM:4/4\nL:1/16\nK:clef=perc\n";
+            let midistaff = this.composeMidiStaff(staff, midiPreamble, "4/4", 'simple');
             
-            this.render(preamble + staff, midiPreamble + staff);
+            this.render(preamble + staff, midistaff);
         }
     },
 
@@ -317,13 +319,14 @@ const app = {
             else clickTrack += "e6";
         }
 
-        // Clean up staff for MIDI (map notes to drum sounds)
-        // Adjust these replacements based on what your rdm_rhythm.js produces
+      // 2. Transpose Visual Notes to Drum/MIDI Notes
         let cleanStaff = staff.replace(/\n/g, '');
-        cleanStaff = cleanStaff.replace(/B/g, 'D,,'); 
-        cleanStaff = cleanStaff.replace(/c/g, 'D,,');
-        cleanStaff = cleanStaff.replace(/F/g, 'C,,');
-        cleanStaff = cleanStaff.replace(/g/g, '^F,,'); 
+        
+        // Exact replacements requested:
+        cleanStaff = cleanStaff.replace(/B/g, 'D,,');  // Kick/Low
+        cleanStaff = cleanStaff.replace(/c/g, 'D,,');  // Snare
+        cleanStaff = cleanStaff.replace(/F/g, 'C,,');  // Kick
+        cleanStaff = cleanStaff.replace(/g/g, '^F,,'); // Hi-Hat
 
         return preamble + cleanStaff + "\n[V:v2] |" + clickTrack + "|]\n";
     }
