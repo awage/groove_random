@@ -111,15 +111,28 @@ const app = {
 
     playBeep: function() {
         if (!this.audioCtx) return;
+        const t = this.audioCtx.currentTime;
+
         const osc = this.audioCtx.createOscillator();
-        const gainNode = this.audioCtx.createGain();
-        osc.connect(gainNode);
-        gainNode.connect(this.audioCtx.destination);
-        osc.frequency.value = 1000; 
+        const gain = this.audioCtx.createGain();
+
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+
+        // Sound characteristics (Woodblock pitch)
+        osc.frequency.setValueAtTime(800, t); 
         osc.type = 'sine';
-        gainNode.gain.value = 0.5; 
-        osc.start();
-        osc.stop(this.audioCtx.currentTime + 0.1); 
+        
+        // Envelope (The "Shape" of the sound)
+        // 1. Start at Silence
+        gain.gain.setValueAtTime(0, t);
+        // 2. Instant Attack to full volume
+        gain.gain.linearRampToValueAtTime(1, t + 0.005);
+        // 3. Sharp Exponential Decay (The "Click" effect)
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+
+        osc.start(t);
+        osc.stop(t + 0.1);
     },
 
     /* --- MIDI Player --- */
