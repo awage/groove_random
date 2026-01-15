@@ -357,7 +357,7 @@ function SampleGenerator(note) {
                 // WOODBLOCK
                 phase += (800 / sampleRate) * 2 * Math.PI;
                 var amp = Math.exp(-dt * 50);
-                result = Math.sin(phase) * amp * 127;
+                result = Math.sin(phase) * amp * 50;
             }
             
             if(dt > 0.6) result = 0; // Cutoff

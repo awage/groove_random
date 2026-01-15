@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jazz Comping</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body data-mode="comping">
+
+    <header class="sticky-header">
+        <div class="container-fluid header-content">
+            <div class="header-left">
+                <a href="index.html" class="back-btn">← Home</a>
+                <strong class="hide-mobile">Jazz Comping</strong>
+            </div>
+            
+            <div class="header-center">
+                 <div class="slider-group">
+                    <label><small>MIDI: <span id="disp_listen_bpm">100</span></small>
+                    <input type="range" id="listen_bpm" min="40" max="200" value="100"></label>
+                </div>
+                <div class="slider-group">
+                    <label><small>Click: <span id="disp_mtro_bpm">100</span></small>
+                    <input type="range" id="mtro_bpm" min="40" max="250" value="100"></label>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button id="play_pop" class="contrast outline btn-sm" onclick="app.toggleMidi()">▶ Listen</button>
+                <button id="metro_btn" class="secondary outline btn-sm" onclick="app.toggleMetronome()">⏱ Metro</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid">
+        <div class="app-grid">
+            
+            <aside class="settings-sidebar">
+                <button id="btn-generate" onclick="app.generateCurrent()" class="btn-primary full-width">⚡ Generate New</button>
+                <hr>
+
+                <div class="setting-block">
+                    <span class="label-title">Voices</span>
+                    <div class="tile-grid">
+                        <label class="tile"><input type="checkbox" class="cmping_vc" value="3" checked> <span>Snare</span></label>
+                        <label class="tile"><input type="checkbox" class="cmping_vc" value="4"> <span>Bass Drum</span></label>
+                    </div>
+                </div>
+
+                <div class="setting-block">
+                    <span class="label-title">Rhythm Density</span>
+                    <div class="tile-grid">
+                        <label class="tile"><input type="checkbox" class="cmping_nt" value="2" checked> <span>8th Notes</span></label>
+                        <label class="tile"><input type="checkbox" class="cmping_nt" value="3" checked> <span>Triplets</span></label>
+                    </div>
+                </div>
+                
+                <div class="alert-box" style="font-size: 0.85rem; color: var(--muted-color); margin-top: 1rem;">
+                    <em>Play the standard swing pattern on the Ride Cymbal while reading the comping figures.</em>
+                </div>
+
+                <hr>
+
+                <div class="setting-block">
+                    <span class="label-title">Length (Bars)</span>
+                    <div class="range-wrapper">
+                        <input type="range" id="bar_nbr" min="1" max="50" value="10">
+                        <span id="disp_bar_nbr" class="badge">10</span>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="paper-area">
+                <div id="paper" class="paper-container">
+                    <div id="notation"></div>
+                    <div id="midicontainer" style="display:none;"></div>
+                    <div class="paper-watermark">Jazz Comping</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/rdm_rhythm.js"></script> 
+    <script src="js/abcjs_basic.min.js"></script>
+    <script src="js/midi_player.js"></script> 
+    <script src="js/app.js"></script>
+</body>
+</html>

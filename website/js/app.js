@@ -1,7 +1,7 @@
 const app = {
     // State
     play: 0,
-    pageMode: null, // 'simple', 'compound', 'sticking', 'patterns'
+    pageMode: null, // 'simple', 'compound', 'sticking', 'grooves', 'comping'
     metronomeInterval: null,
     audioCtx: null, 
     
@@ -12,19 +12,14 @@ const app = {
     barsNumber: 10,
 
     init: function() {
-        // Detect Page Mode from Body Tag
         const body = document.body;
         this.pageMode = body.getAttribute('data-mode');
 
-        // If no mode (landing page), stop here
         if (!this.pageMode) return;
 
         this.setupSliders();
-        
-        // Initial Generation
         this.generateCurrent();
 
-        // Handle Window Resize to redraw paper
         window.addEventListener('resize', () => {
              this.generateCurrent();
         });
@@ -46,7 +41,6 @@ const app = {
                         this.startMetronome();
                     }
                     
-                    // If Tempo changes while playing MIDI, restart
                     if(id === 'listen_bpm' && this.play === 1) {
                         this.StopMidiClean();
                         this.playMidi(); 
@@ -56,18 +50,11 @@ const app = {
         });
     },
 
-    /* --- UI Toggles for Specific Pages --- */
+    /* --- UI Toggles --- */
     toggleStickingMode: function() {
         const mode = document.querySelector('input[name="sticking_type"]:checked').value;
         document.getElementById('panel-accent').style.display = (mode === 'accent') ? 'block' : 'none';
         document.getElementById('panel-coord').style.display = (mode === 'coord') ? 'block' : 'none';
-        this.generateCurrent();
-    },
-
-    togglePatternMode: function() {
-        const mode = document.querySelector('input[name="pattern_type"]:checked').value;
-        document.getElementById('panel-groove').style.display = (mode === 'groove') ? 'block' : 'none';
-        document.getElementById('panel-comping').style.display = (mode === 'comping') ? 'block' : 'none';
         this.generateCurrent();
     },
 
@@ -168,25 +155,24 @@ const app = {
         const paperElement = document.getElementById('paper');
         if(!paperElement) return;
 
-        // Dynamic Width
         const containerWidth = paperElement.clientWidth - 110; 
         this.renderParams.width = containerWidth;
         this.printerParams.staffwidth = containerWidth;
         
-        // Global Params
         const barEl = document.getElementById('bar_nbr');
         const tempoEl = document.getElementById('listen_bpm');
         this.barsNumber = barEl ? parseInt(barEl.value) : 10;
         this.midiParams.qpm = tempoEl ? parseInt(tempoEl.value) : 100;
 
-        // Dispatch based on Page Mode
+        // Dispatch
         if (this.pageMode === 'simple') this.generateSimple();
         else if (this.pageMode === 'compound') this.generateCompound();
         else if (this.pageMode === 'sticking') this.generateSticking();
-        else if (this.pageMode === 'patterns') this.generatePatterns();
+        else if (this.pageMode === 'grooves') this.generateGrooves();
+        else if (this.pageMode === 'comping') this.generateComping();
     },
 
-    /* 1. SIMPLE MODE */
+    /* 1. SIMPLE */
     generateSimple: function() {
         const meterIn = document.querySelector('input[name="mter"]:checked').value;
         const options = Array.from(document.querySelectorAll('input.onebeat:checked')).map(cb => cb.value);
@@ -204,7 +190,7 @@ const app = {
         this.render(preamble + staff, midistaff);
     },
 
-    /* 2. COMPOUND MODE */
+    /* 2. COMPOUND */
     generateCompound: function() {
         const meterIn = document.querySelector('input[name="cmeter"]:checked').value;
         const options = Array.from(document.querySelectorAll('input.cmp_onebeat:checked')).map(cb => cb.value);
@@ -228,13 +214,12 @@ const app = {
         this.render(preamble + staff, midistaff);
     },
 
-    /* 3. STICKING MODE */
+    /* 3. STICKING */
     generateSticking: function() {
         const subMode = document.querySelector('input[name="sticking_type"]:checked').value;
 
         if (subMode === 'accent') {
             const options = Array.from(document.querySelectorAll('input.sticking_opt:checked')).map(cb => cb.value);
-            // Assuming generate_accent_exercise exists
             let staff = generate_accent_exercise(options,  this.barsNumber);
             let preamble = "X:1\nT: Accent Exercise\nM:4/4\nL:1/16\nK:clef=perc stafflines=1\n";
             let midistaff = this.composeMidiStaff(staff, "X:1\nM:4/4\nL:1/16\nK:clef=perc\n[V:v1] |", "4/4", 'simple');
@@ -243,7 +228,6 @@ const app = {
         } else {
             const md = document.querySelector('input[name="md"]:checked').value;
             const mi = document.querySelector('input[name="mi"]:checked').value;
-            // Assuming generate_coordination_exercise exists
             let staff = generate_coordination_exercise(md, mi,  this.barsNumber);
             let preamble = "X:1\nT: Coordination\nM:4/4\nL:1/16\nK:clef=perc stafflines=1\n";
             let midiPreamble = "X:1\nT:Midi\nM:4/4\nL:1/16\nK:clef=perc\n";
@@ -251,61 +235,56 @@ const app = {
         }
     },
 
-    /* 4. PATTERNS MODE */
-    generatePatterns: function() {
-        const subMode = document.querySelector('input[name="pattern_type"]:checked').value;
-
-        if (subMode === 'groove') {
-            const grooveType = document.querySelector('input[name="grvf"]:checked').value;
-            let staff = "";
-            
-            if (grooveType === '1') {
-                staff=generate_pattern_markov_8(this.barsNumber);
-            } else {
-                staff = generate_pattern_paradidles(this.barsNumber);
-            }
-
-            // let preamble = "X:1\nT: Groove Pattern\nM:4/4\nL:1/16\nK:clef=perc stafflines=1\n";
-            // Grooves usually have multiple voices (Hat, Snare, Kick) in the ABC string already
-            // So we can often just use the same string for MIDI
-            let midiPreamble = "X:1\nT:Midi\nM:4/4\nL:1/16\nK:clef=perc\n";
-            let preamble="X:1\nT: Random groove\nM: 4/4\nL: 1/16\nK: clef=perc\n%%stretchlast 0\n|";
-            // let midiPreamble= "X:1\nM: 4/4\nL:1/16\nK:clef=perc\n[V:v1] |"; 
-            let midistaff = this.composeMidiStaff(staff, midiPreamble, "4/4", 'simple');
-          
-            this.render(preamble + staff,  midistaff);
-
+    /* 4. GROOVES */
+    generateGrooves: function() {
+        const grooveType = document.querySelector('input[name="grvf"]:checked').value;
+        let staff = "";
+        
+        if (grooveType === '1') {
+            staff = generate_pattern_markov_8(this.barsNumber);
         } else {
-            // Comping
-            const voices = Array.from(document.querySelectorAll('input.cmping_vc:checked')).map(cb => cb.value);
-            const notes = Array.from(document.querySelectorAll('input.cmping_nt:checked')).map(cb => cb.value);
-            
-            let staff = generate_comping_exercise(voices, notes, 4, (this.renderParams.width/1280), this.barsNumber);
-            
-            let preamble = "X:1\nT: Jazz Comping\nM:4/4\nL:1/16\nK:clef=perc stafflines=1\n";
-            let midiPreamble= "X:1\nM: 4/4\nL:1/16\nK:clef=perc\n[V:v1] |"; 
-            let midistr="";
-            for(i=0;i<(this.barsNumber); i++){	
-                // Swing pattern on hi-hat
-                midistr= midistr.concat("[^F,,4e4] (3:2:3[^F,,2e2]z2^F,,2 [^F,,4e4] (3:2:3[^F,,2e2]z2^F,,2 |");	
-            }
-            midistr = "[V:v3] | " + midistr + " |]\n ";
-            let midistaff = this.composeMidiStaff(staff, midiPreamble, "4/4", 'simple');
-            midistaff = midistaff + midistr
-            this.render(preamble + staff, midistaff);
+            staff = generate_pattern_paradidles(this.barsNumber);
         }
+
+        let preamble="X:1\nT: Random groove\nM: 4/4\nL: 1/16\nK: clef=perc\n%%stretchlast 0\n|";
+        let midiPreamble = "X:1\nT:Midi\nM:4/4\nL:1/16\nK:clef=perc\n";
+        let midistaff = this.composeMidiStaff(staff, midiPreamble, "4/4", 'simple');
+      
+        this.render(preamble + staff,  midistaff);
     },
 
-    /* --- Helper: Render to Screen --- */
+    /* 5. COMPING */
+    generateComping: function() {
+        const voices = Array.from(document.querySelectorAll('input.cmping_vc:checked')).map(cb => cb.value);
+        const notes = Array.from(document.querySelectorAll('input.cmping_nt:checked')).map(cb => cb.value);
+        
+        let staff = generate_comping_exercise(voices, notes, 4, (this.renderParams.width/1280), this.barsNumber);
+        
+        let preamble = "X:1\nT: Jazz Comping\nM:4/4\nL:1/16\nK:clef=perc\n%%stretchlast 0\n";
+        let midiPreamble= "X:1\nM: 4/4\nL:1/16\nK:clef=perc\n[V:v1] |"; 
+        
+        // Add Ride Cymbal Swing Pattern (V3)
+        let midistr="";
+        for(let i=0; i<this.barsNumber; i++){    
+            midistr= midistr.concat("[^F,,4e4] (3:2:3[^F,,2e2]z2^F,,2 [^F,,4e4] (3:2:3[^F,,2e2]z2^F,,2 |");    
+        }
+        midistr = "[V:v3] | " + midistr + " |]\n ";
+
+        let midistaff = this.composeMidiStaff(staff, midiPreamble, "4/4", 'simple');
+        midistaff = midistaff + midistr;
+        
+        this.render(preamble + staff, midistaff);
+    },
+
+    /* --- Render Helper --- */
     render: function(visualAbc, midiAbc) {
         ABCJS.renderAbc('notation', visualAbc, {}, this.printerParams, this.renderParams);
         this.midiParams.miditrack = midiAbc;
         ABCJS.renderMidi('midicontainer', midiAbc, {}, this.midiParams, {});
     },
 
-    /* --- Helper: Compose MIDI (Add Metronome Track) --- */
+    /* --- MIDI Composer Helper --- */
     composeMidiStaff: function(staff, preamble, meter, type) {
-        // Calculate beat structure for the metronome click (V2)
         let loopMeter = 0;
         if (meter === '7/8') {
             loopMeter = 7;
@@ -325,14 +304,11 @@ const app = {
             else clickTrack += "e6";
         }
 
-      // 2. Transpose Visual Notes to Drum/MIDI Notes
         let cleanStaff = staff.replace(/\n/g, '');
-        
-        // Exact replacements requested:
-        cleanStaff = cleanStaff.replace(/B/g, 'D,,');  // Kick/Low
-        cleanStaff = cleanStaff.replace(/c/g, 'D,,');  // Snare
-        cleanStaff = cleanStaff.replace(/F/g, 'C,,');  // Kick
-        cleanStaff = cleanStaff.replace(/g/g, '^F,,'); // Hi-Hat
+        cleanStaff = cleanStaff.replace(/B/g, 'D,,');  
+        cleanStaff = cleanStaff.replace(/c/g, 'D,,');  
+        cleanStaff = cleanStaff.replace(/F/g, 'C,,');  
+        cleanStaff = cleanStaff.replace(/g/g, '^F,,'); 
 
         return preamble + cleanStaff + "\n[V:v2] |" + clickTrack + "|]\n";
     }
