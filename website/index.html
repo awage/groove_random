@@ -3,64 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Drum Reading Exercises</title>
+    <title>Random Grooves - Home</title>
+    <!-- Pico.css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <!-- Custom tweaks -->
     <link rel="stylesheet" href="css/custom.css">
+    <style>
+        /* Local tweaks for the Landing Page only */
+        .compact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Smaller cards */
+            gap: 1.3rem;
+            margin-top: 2rem;
+        }
+        .mode-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1.2rem;
+            height: 100%;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+        .mode-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+        .card-icon {
+            font-size: 2.5rem;
+            margin: 0.5rem 0;
+            color: var(--primary);
+            font-weight: 800;
+        }
+        .author-info {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--muted-border-color);
+            color: var(--muted-color);
+            font-size: 0.9rem;
+        }
+        /* Remove text decoration from links */
+        a.card-link { text-decoration: none; color: inherit; }
+
+   /* Book List Styling */
+        .legends-section {
+            background-color: var(--card-background-color);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+        .legends-section ul {
+            margin-bottom: 0;
+        }
+        .legends-section li {
+            margin-bottom: 0.5rem;
+        }    
+    </style>
 </head>
 <body>
-    <main class="container landing-container">
-        <h1 class="text-center">🥁 Rhythm Trainer</h1>
-        <p class="text-center">Select an exercise mode to begin reading practice.</p>
-<div class="grid landing-grid">
-    <!-- Simple -->
-    <a href="simple.html" class="card-link">
-        <article class="mode-card">
-            <header>Simple Meters</header>
-            <div class="huge-icon">4/4</div>
-            <footer><small>Reading</small><br><strong>Start →</strong></footer>
-        </article>
-    </a>
 
-    <!-- Compound -->
-    <a href="compound.html" class="card-link">
-        <article class="mode-card">
-            <header>Compound</header>
-            <div class="huge-icon">6/8</div>
-            <footer><small>Reading</small><br><strong>Start →</strong></footer>
-        </article>
-    </a>
+    <!-- Header / Branding -->
+    <header class="container" style="padding-top: 3rem; padding-bottom: 1rem; text-align: center;">
+        <hgroup>
+            <h1>🥁 RANDOM GROOVES</h1>
+            <p>Infinite Sight-Reading & Coordination Generator</p>
+        </hgroup>
+    </header>
 
-    <!-- Sticking -->
-    <a href="sticking.html" class="card-link">
-        <article class="mode-card">
-            <header>Sticking</header>
-            <div class="huge-icon">R L</div>
-            <footer><small>Accents & Coord</small><br><strong>Start →</strong></footer>
-        </article>
-    </a>
-
-    <!-- Grooves -->
-    <a href="grooves.html" class="card-link">
-        <article class="mode-card">
-            <header>Grooves</header>
-            <div class="huge-icon">♫</div>
-            <footer><small>Pattern Gen</small><br><strong>Start →</strong></footer>
-        </article>
-    </a>
-
-    <!-- Comping -->
-    <a href="comping.html" class="card-link">
-        <article class="mode-card">
-            <header>Comping</header>
-            <div class="huge-icon">Swing</div>
-            <footer><small>Jazz Practice</small><br><strong>Start →</strong></footer>
-        </article>
-    </a>
-</div>
+    <main class="container">
         
-        <!-- <footer class="text-center mt-4"> -->
-        <!--     <small>v2.2 Redesign</small> -->
-        <!-- </footer> -->
+        <!-- The Compact Grid -->
+        <div class="compact-grid">
+            
+            <!-- 1. Simple -->
+            <a href="simple.html" class="card-link">
+                <article class="mode-card">
+                    <header><strong>Simple Meters</strong></header>
+                    <div class="card-icon">4/4</div>
+                    <small>Reading Exercises</small>
+                </article>
+            </a>
+
+            <!-- 2. Compound -->
+            <a href="compound.html" class="card-link">
+                <article class="mode-card">
+                    <header><strong>Odd Meters</strong></header>
+                    <div class="card-icon">6/8</div>
+                    <small>Reading Exercises</small>
+                </article>
+            </a>
+
+            <!-- 3. Sticking -->
+            <a href="sticking.html" class="card-link">
+                <article class="mode-card">
+                    <header><strong>Sticking</strong></header>
+                    <div class="card-icon">R L</div>
+                    <small>Accents & Coord</small>
+                </article>
+            </a>
+
+            <!-- 4. Grooves -->
+            <a href="grooves.html" class="card-link">
+                <article class="mode-card">
+                    <header><strong>Grooves</strong></header>
+                    <div class="card-icon">🥁</div>
+                    <small>Syncopation</small>
+                </article>
+            </a>
+
+            <!-- 5. Comping -->
+            <a href="comping.html" class="card-link">
+                <article class="mode-card">
+                    <header><strong>Comping</strong></header>
+                    <div class="card-icon">🎷</div>
+                    <small>Jazz Independence</small>
+                </article>
+            </a>
+
+        </div>
+
+        <!-- Drum Legends Section -->
+<br>
+<br>
+<br>
+        <section class="legends-section">
+            <hgroup>
+                <p>The inspiration to create this page came from great drum books. I recommend the reading and practicing of the following books:</p>
+            </hgroup>
+            
+            <ul>
+                <li><strong>Gary Chester</strong>: The new breed</li>
+                <li><strong>Gary Chaffee</strong>: Patterns series</li>
+                <li><strong>Joe Morello</strong>: Master Study</li>
+                <li><strong>Marc Atkinson</strong>: The Unreel Drum Book</li>
+                <li><strong>Ted Reed</strong>: Syncopation</li>
+                <li><strong>John Riley</strong>: The Art of Bop Drumming</li>
+                <li><strong>George Lawrence</strong>: Stick Control for the Snare Drummer</li>
+            </ul>
+        </section>
+        <!-- Author / Footer Info -->
+        <footer class="author-info text-center">
+            <p>
+                <strong>Random Grooves v2.2</strong><br>
+                Created by [Your Name/Author Info]<br>
+            </p>
+            <nav>
+                <ul>
+                    <li><a href="#" class="secondary">About</a></li>
+                    <li><a href="#" class="secondary">Contact</a></li>
+                    <li><a href="https://github.com" target="_blank" class="secondary">GitHub</a></li>
+                </ul>
+            </nav>
+        </footer>
+
     </main>
+
 </body>
 </html>
