@@ -1012,6 +1012,7 @@ function generate_comping_exercise(voice_type, ex_type, meter_in, width_factor, 
     }	
 
     
+    staff=staff.concat("|]\n");  
     return staff;
 }
 

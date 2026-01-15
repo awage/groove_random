@@ -169,7 +169,7 @@ const app = {
         if(!paperElement) return;
 
         // Dynamic Width
-        const containerWidth = paperElement.clientWidth - 60; 
+        const containerWidth = paperElement.clientWidth - 110; 
         this.renderParams.width = containerWidth;
         this.printerParams.staffwidth = containerWidth;
         
@@ -280,12 +280,18 @@ const app = {
             const voices = Array.from(document.querySelectorAll('input.cmping_vc:checked')).map(cb => cb.value);
             const notes = Array.from(document.querySelectorAll('input.cmping_nt:checked')).map(cb => cb.value);
             
-            let staff = generate_comping_exercise(voices, notes,  (this.renderParams.width/1280), this.barsNumber);
+            let staff = generate_comping_exercise(voices, notes, 4, (this.renderParams.width/1280), this.barsNumber);
             
             let preamble = "X:1\nT: Jazz Comping\nM:4/4\nL:1/16\nK:clef=perc stafflines=1\n";
-            let midiPreamble = "X:1\nT:Midi\nM:4/4\nL:1/16\nK:clef=perc\n";
+            let midiPreamble= "X:1\nM: 4/4\nL:1/16\nK:clef=perc\n[V:v1] |"; 
+            let midistr="";
+            for(i=0;i<(this.barsNumber); i++){	
+                // Swing pattern on hi-hat
+                midistr= midistr.concat("[^F,,4e4] (3:2:3[^F,,2e2]z2^F,,2 [^F,,4e4] (3:2:3[^F,,2e2]z2^F,,2 |");	
+            }
+            midistr = "[V:v3] | " + midistr + " |]\n ";
             let midistaff = this.composeMidiStaff(staff, midiPreamble, "4/4", 'simple');
-            
+            midistaff = midistaff + midistr
             this.render(preamble + staff, midistaff);
         }
     },
